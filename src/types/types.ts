@@ -9,7 +9,7 @@ export type ApiResponse = {
 export type Post = {
     id: string;
     bucket: string;
-    caption: string;
+    caption?: string;
     creationDate: CreationDate;
     imageHeight: number;
     imageWidth: number;
@@ -17,7 +17,7 @@ export type Post = {
     lateInSeconds: number;
     mediaType: string;
     members: string[];
-    music: Music;
+    music?: Music;
     notificationID: string;
     ownerID: string;
     photoURL: string;
