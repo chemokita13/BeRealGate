@@ -1,5 +1,13 @@
+import RootLayout from "@/app/layout";
+
 function Login() {
-    return <div>Login page</div>;
+    return (
+        <RootLayout>
+            <main>
+                <h1> Hello world!"</h1>
+            </main>
+        </RootLayout>
+    );
 }
 
 export default Login;

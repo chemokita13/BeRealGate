@@ -1,27 +1,28 @@
 import Footer from "./components/footer";
 import Nav from "./components/nav";
-import "./globals.css";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
-
-export const metadata = {
-    title: "BeFake API",
-    description: "A BeReal client",
-};
-
-export default function RootLayout({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
+import Head from "next/head";
+export default function Layout({ children }: { children: React.ReactNode }) {
     return (
-        <html lang="en">
-            <body className={inter.className}>
-                <Nav />
-                {children}
-                <Footer />
-            </body>
-        </html>
+        <div>
+            <Head>
+                <title>BeReal API web</title>
+                <meta
+                    name="description"
+                    content="BeReal API web from https://github.com/chemokita13/beReal-api"
+                />
+                <meta
+                    name="author"
+                    content="Jose Maria Pahino, @chemokita13 on github (https://github.com/chemokita13)"
+                />
+                <meta
+                    name="keywords"
+                    content="BeReal, BeFake, BeReal API, BeReal API web, BeReal API web"
+                />
+                <meta name="copiright" content="Any, license free!!" />
+            </Head>
+            <Nav />
+            {children}
+            <Footer />
+        </div>
     );
 }
