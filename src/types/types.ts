@@ -100,3 +100,20 @@ export interface Music {
     openUrl: string;
     audioType: string;
 }
+
+// PostData to submit
+export type PostData = {
+    resize?: boolean;
+
+    late?: boolean;
+
+    visibility: string;
+
+    retakes?: number;
+
+    caption?: string;
+
+    taken_at?: string;
+
+    location?: [number, number];
+};
