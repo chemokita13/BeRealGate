@@ -1,4 +1,4 @@
-import FriendPosts from "@/app/components/FriendPosts";
+import FriendPosts from "@/app/components/friendPosts";
 import PostElement from "@/app/components/post";
 import axiosInstance from "@/constants/axiosInstance";
 import {
