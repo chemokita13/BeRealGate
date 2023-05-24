@@ -6,81 +6,97 @@ export type ApiResponse = {
 };
 
 // Post types
-export type Post = {
-    id: string;
-    bucket: string;
-    caption?: string;
-    creationDate: CreationDate;
-    imageHeight: number;
-    imageWidth: number;
-    isPublic: boolean;
-    lateInSeconds: number;
-    mediaType: string;
-    members: string[];
-    music?: Music;
-    notificationID: string;
-    ownerID: string;
-    photoURL: string;
+export interface FriendsFeed {
+    userPosts: UserPosts;
+    friendsPosts: FriendsPost[];
+    remainingPosts: number;
+    maxPostsPerMoment: number;
+}
+export interface UserPosts {
+    user: User;
     region: string;
-    comment: Comment[];
-    realMojis: RealMoji[];
-    screenshots: any[];
-    screenshotsV2: any[];
-    retakeCounter: number;
-    secondaryImageHeight: number;
-    secondaryImageWidth: number;
-    secondaryPhotoURL: string;
-    takenAt: CreationDate;
-    updatedAt: number;
-    user: User;
-    userName: string;
-};
-
-export type Comment = {
-    id: string;
-    uid: string;
-    userName: string;
-    user: User;
-    text: string;
-    creationDate: CreationDate;
-};
-
-export type CreationDate = {
-    _seconds: number;
-    _nanoseconds: number;
-};
-
-export type User = {
+    momentId: string;
+    posts: Post[];
+}
+export interface User {
     id: string;
     username: string;
-    profilePicture: ProfilePicture;
-};
-
-export type ProfilePicture = {
+    profilePicture: ProfilePictureOrMediaOrPrimaryOrSecondary;
+}
+export interface ProfilePictureOrMediaOrPrimaryOrSecondary {
     url: string;
     width: number;
     height: number;
-};
-
-export type Music = {
+}
+export interface RealMojisEntity {
+    id: string;
+    user: User;
+    media: ProfilePictureOrMediaOrPrimaryOrSecondary;
+    type: string;
+    emoji: string;
+    isInstant: boolean;
+    postedAt: string;
+}
+export interface FriendsPost {
+    user: User1;
+    momentId: string;
+    region: string;
+    posts: Post[];
+}
+export interface User1 {
+    id: string;
+    username: string;
+    profilePicture?: ProfilePictureOrMediaOrPrimaryOrSecondary1 | null;
+}
+export interface ProfilePictureOrMediaOrPrimaryOrSecondary1 {
+    url: string;
+    width: number;
+    height: number;
+}
+export interface Post {
+    id: string;
+    primary: ProfilePictureOrMediaOrPrimaryOrSecondary;
+    secondary: ProfilePictureOrMediaOrPrimaryOrSecondary;
+    location: Location | null;
+    caption: string | null;
+    retakeCounter: number;
+    lateInSeconds: number;
+    isLate: boolean;
+    isMain: boolean;
+    takenAt: string;
+    realMojis: RealMojisEntity1[];
+    comments: CommentsEntity[];
+    creationDate: string;
+    updatedAt: string;
+    music?: Music | null;
+}
+export interface Location {
+    latitude: number;
+    longitude: number;
+}
+export interface RealMojisEntity1 {
+    id: string;
+    user: User;
+    media: ProfilePictureOrMediaOrPrimaryOrSecondary;
+    type: string;
+    emoji: string;
+    isInstant: boolean;
+    postedAt: string;
+}
+export interface CommentsEntity {
+    id: string;
+    user: User1;
+    content: string;
+    postedAt: string;
+}
+export interface Music {
     isrc: string;
-    openUrl: string;
-    visibility: string;
     track: string;
     artist: string;
-    provider: string;
-    providerId: string;
     artwork: string;
+    provider: string;
+    visibility: string;
+    providerId: string;
+    openUrl: string;
     audioType: string;
-};
-
-export type RealMoji = {
-    id: string;
-    uid: string;
-    userName: string;
-    user: User;
-    date: CreationDate;
-    emoji: string;
-    type: string;
-    uri: string;
-};
+}
