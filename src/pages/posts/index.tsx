@@ -8,10 +8,13 @@ import {
     Post,
     UserPosts,
 } from "@/types/types";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Cookies from "universal-cookie";
 
 function PostFeed() {
+    const cookies = new Cookies(); // Cookies instance
+    const router = useRouter(); // Next router instance
     // Posts state
     const [posts, setPosts] = useState<FriendsPost[]>([]);
     // User post state
@@ -19,29 +22,31 @@ function PostFeed() {
     // Remaining posts state
     const [postsRemaining, setPostsRemaining] = useState<number>(0);
 
-    const getPosts = async (token: string): Promise<void> => {
-        const { status, data }: { status: number; data: ApiResponse } =
-            await axiosInstance.get("friends/feed", {
-                headers: {
-                    token: token, // Send token in headers
-                },
-            });
-        if (status !== 200) {
-            alert("Error getting posts");
-            return;
+    const getPosts = async (): Promise<void> => {
+        try {
+            const token = cookies.get("token"); // Get new token
+            const { data }: { data: ApiResponse } = await axiosInstance.get(
+                "friends/feed",
+                {
+                    headers: {
+                        token: token, // Send token in headers
+                    },
+                }
+            );
+            const PostData: FriendsFeed = data.data.data; // Get post data
+            const UserPost: UserPosts = PostData.userPosts; // Get user posts
+            const friendPosts: FriendsPost[] = PostData.friendsPosts; // Get friend posts
+            setPosts(() => friendPosts); // Set posts state
+            setUserPost(() => UserPost); // Set user post state
+            setPostsRemaining(() => PostData.remainingPosts); // Set remaining posts state
+        } catch (error) {
+            alert("Error getting posts, try login again");
+            router.push("/login");
         }
-        const PostData: FriendsFeed = data.data.data; // Get post data
-        const UserPost: UserPosts = PostData.userPosts; // Get user posts
-        const friendPosts: FriendsPost[] = PostData.friendsPosts; // Get friend posts
-        setPosts(() => friendPosts); // Set posts state
-        setUserPost(() => UserPost); // Set user post state
-        setPostsRemaining(() => PostData.remainingPosts); // Set remaining posts state
     };
 
     useEffect(() => {
-        const cookies = new Cookies(); // Cookies instance
-        const token = cookies.get("token"); // Get token from cookies
-        getPosts(token);
+        getPosts();
     }, []);
 
     return (
