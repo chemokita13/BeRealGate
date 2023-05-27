@@ -9,7 +9,6 @@ function FriendPosts({ FriendPost }: { FriendPost: FriendsPost }) {
             {FriendPost.posts.map((post: Post) => {
                 return <PostElement post={post} key={post.id} />;
             })}
-            )
         </div>
     );
 }
