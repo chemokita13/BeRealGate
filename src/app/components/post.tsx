@@ -21,15 +21,11 @@ function PostElement({ post }: { post: Post }) {
                     },
                 }
             );
-        console.log(data);
         if (status !== 201) {
             alert("Something went wrong");
             return;
         }
         const newComent: CommentsEntity = data.data;
-
-        console.log(newComent);
-        console.log(postInstance);
 
         setPostInstance(() => {
             return {
@@ -37,7 +33,6 @@ function PostElement({ post }: { post: Post }) {
                 comments: [...postInstance.comments, newComent],
             };
         });
-        console.log(postInstance);
     };
     const [comment, setComment] = useState<string>(""); // comment state
     const [postInstance, setPostInstance] = useState<Post>(post); // post state for updating it
