@@ -60,7 +60,7 @@ function Login() {
             // delete otpSession from cookies
             cookies.remove("otpSession", { path: "/" });
             // save token in cookies
-            cookies.set("token", data.data.tokenObj, { path: "/" });
+            cookies.set("token", data.data.token, { path: "/" });
             // Notify user
             alert("Login success");
             // redirect to posts page
