@@ -1,13 +1,8 @@
-import axiosInstance from "@/constants/axiosInstance";
-import {
-    ApiResponse,
-    CommentsEntity,
-    Post,
-    RealMojisEntity,
-} from "@/types/types";
+import { Post, RealMojisEntity } from "@/types/types";
 import { useState } from "react";
-import Cookies from "universal-cookie";
 import CommentsBox from "./commentsBox";
+import RealMoji from "./realMoji";
+import Music from "./music";
 
 function PostElement({ post }: { post: Post }) {
     const [postInstance, setPostInstance] = useState<Post>(post); // post state for updating it
@@ -32,30 +27,10 @@ function PostElement({ post }: { post: Post }) {
 
             <div>
                 {postInstance.realMojis.map((realMoji: RealMojisEntity) => {
-                    return (
-                        <div key={realMoji.id}>
-                            <img
-                                src={realMoji.media.url}
-                                width={realMoji.media.width / 10}
-                                height={realMoji.media.height / 10}
-                            />
-                            <h3>
-                                {realMoji.user.username} - {realMoji.type}
-                            </h3>
-                        </div>
-                    );
+                    return <RealMoji realMoji={realMoji} key={realMoji.id} />;
                 })}
             </div>
-            {postInstance.music && (
-                <div>
-                    <h3>
-                        <a href={postInstance.music.openUrl}>
-                            {postInstance.music.track} -
-                            {postInstance.music.artist}
-                        </a>
-                    </h3>
-                </div>
-            )}
+            {postInstance.music && <Music music={postInstance.music} />}
         </div>
     );
 }
