@@ -4,7 +4,7 @@ import CommentsBox from "./commentsBox";
 import RealMoji from "./realMoji";
 import Music from "./music";
 
-function PostElement({ post }: { post: Post }) {
+function PostElement({ post, username }: { post: Post; username: string }) {
     const [postInstance, setPostInstance] = useState<Post>(post); // post state for updating it
     return (
         <div>
@@ -23,6 +23,7 @@ function PostElement({ post }: { post: Post }) {
             <CommentsBox
                 postInstance={postInstance}
                 setPostInstance={setPostInstance}
+                username={username}
             />
 
             <div>

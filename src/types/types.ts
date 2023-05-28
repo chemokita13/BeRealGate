@@ -64,7 +64,7 @@ export interface Post {
     isLate: boolean;
     isMain: boolean;
     takenAt: string;
-    realMojis: RealMojisEntity1[];
+    realMojis: RealMojisEntity[];
     comments: CommentsEntity[];
     creationDate: string;
     updatedAt: string;
@@ -74,15 +74,7 @@ export interface Location {
     latitude: number;
     longitude: number;
 }
-export interface RealMojisEntity1 {
-    id: string;
-    user: User;
-    media: ProfilePictureOrMediaOrPrimaryOrSecondary;
-    type: string;
-    emoji: string;
-    isInstant: boolean;
-    postedAt: string;
-}
+
 export interface CommentsEntity {
     id: string;
     user: User1;
@@ -116,4 +108,44 @@ export type PostData = {
     taken_at?: string;
 
     location?: [number, number];
+};
+
+export type UserInfo = {
+    id: string;
+    username: string;
+    birthdate: string;
+    fullname: string;
+    profilePicture: {
+        url: string;
+        width: number;
+        height: number;
+    };
+    realmojis: Array<{
+        id: string;
+        userId: string;
+        emoji: string;
+        media: {
+            url: string;
+            width: number;
+            height: number;
+        };
+    }>;
+    devices: Array<{
+        clientVersion: string;
+        device: string;
+        deviceId: string;
+        platform: string;
+        language: string;
+        timezone: string;
+    }>;
+    canDeletePost: boolean;
+    canPost: boolean;
+    canUpdateRegion: boolean;
+    phoneNumber: string;
+    biography: string;
+    location: string;
+    countryCode: string;
+    region: string;
+    createdAt: string;
+    isRealPeople: boolean;
 };

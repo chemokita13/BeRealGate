@@ -7,6 +7,7 @@ import {
     FriendsFeed,
     FriendsPost,
     Post,
+    UserInfo,
     UserPosts,
 } from "@/types/types";
 import { useRouter } from "next/navigation";
@@ -22,6 +23,26 @@ function PostFeed() {
     const [userPost, setUserPost] = useState<UserPosts>();
     // Remaining posts state
     const [postsRemaining, setPostsRemaining] = useState<number>(0);
+    // User info state
+    const [userInfo, setUserInfo] = useState<UserInfo>();
+
+    const getUserInfo = async (token: string): Promise<void> => {
+        try {
+            const { data, status } = await axiosInstance.get("friends/me", {
+                headers: {
+                    token: token, // Send token in headers
+                },
+            }); // Get user info
+            if (status !== 200) {
+                alert("Error getting user info, something is going wrong");
+            }
+            const userInfoRes: UserInfo = data.data; // Get user info
+            setUserInfo(userInfoRes); // Set user info state
+        } catch (error) {
+            alert("Error getting user info, something is going wrong");
+            console.error(error);
+        }
+    };
 
     const reFreshToken = async (): Promise<void> => {
         const oldToken = cookies.get("token"); // Get new token
@@ -55,6 +76,7 @@ function PostFeed() {
             setPosts(() => friendPosts); // Set posts state
             setUserPost(() => UserPost); // Set user post state
             setPostsRemaining(() => PostData.remainingPosts); // Set remaining posts state
+            await getUserInfo(token); // Get user info
         } catch (error) {
             alert("Error getting posts, try login again");
             router.push("/login");
@@ -68,21 +90,30 @@ function PostFeed() {
     return (
         <Layout>
             <div className="MainComponentContainer">
-                {userPost && (
+                {userPost ? (
                     <div>
                         <h1>Your post: @{userPost.user.username}</h1>
                         {userPost.posts.map((post: Post) => {
-                            return <PostElement post={post} key={post.id} />;
+                            return (
+                                <PostElement
+                                    post={post}
+                                    key={post.id}
+                                    username={userInfo?.username || ""}
+                                />
+                            );
                         })}
                         <p>Posts made: {userPost.posts.length}</p>
                         <p>Remaining posts: {postsRemaining}</p>
                     </div>
+                ) : (
+                    <h1>You don't have any post</h1>
                 )}
                 <div>
                     {posts.map((Fpost: FriendsPost) => {
                         return (
                             <FriendPosts
                                 FriendPost={Fpost}
+                                username={userInfo?.username || ""}
                                 key={Fpost.user.id}
                             />
                         );

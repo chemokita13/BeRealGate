@@ -6,13 +6,43 @@ import Cookies from "universal-cookie";
 function CommentsBox({
     setPostInstance,
     postInstance,
+    username,
 }: {
     setPostInstance: React.Dispatch<React.SetStateAction<Post>>;
     postInstance: Post;
+    username: string;
 }) {
     const cookies = new Cookies(); // Cookies instance
     const [comment, setComment] = useState<string>(""); // comment state
-    const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleDeleteComment = async (commentId: string) => {
+        const token = cookies.get("token"); // Get new token
+        const { status, data }: { status: number; data: ApiResponse } =
+            await axiosInstance.delete(`post/comment`, {
+                headers: {
+                    token: token,
+                },
+                data: {
+                    commentId: commentId,
+                    postId: postInstance.id,
+                },
+            });
+        if (status !== 201) {
+            alert("Something went wrong");
+            return;
+        }
+        setPostInstance(() => {
+            return {
+                ...postInstance,
+                comments: postInstance.comments.filter(
+                    (comment: CommentsEntity) => comment.id !== commentId
+                ),
+            };
+        });
+        alert(data.message);
+    };
+    const handleFormSubmit = async (
+        e: React.FormEvent<HTMLFormElement>
+    ): Promise<void> => {
         e.preventDefault();
         const token = cookies.get("token"); // Get new token
         const { status, data }: { status: number; data: ApiResponse } =
@@ -28,7 +58,7 @@ function CommentsBox({
                     },
                 }
             );
-        if (status !== 201) {
+        if (status !== 200) {
             alert("Something went wrong");
             return;
         }
@@ -49,6 +79,15 @@ function CommentsBox({
                         <div key={comment.id}>
                             <h5>{comment.user.username}</h5>
                             <p>{comment.content}</p>
+                            {comment.user.username === username && (
+                                <button
+                                    onClick={() =>
+                                        handleDeleteComment(comment.id)
+                                    }
+                                >
+                                    Delete
+                                </button>
+                            )}
                         </div>
                     );
                 })}
