@@ -1,6 +1,7 @@
 import Footer from "./components/footer";
 import Nav from "./components/nav";
 import Head from "next/head";
+import "./globals.css";
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (
         <div>
