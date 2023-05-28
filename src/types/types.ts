@@ -32,7 +32,7 @@ export interface RealMojisEntity {
     id: string;
     user: User;
     media: ProfilePictureOrMediaOrPrimaryOrSecondary;
-    type: string;
+    type: "heartEyes" | "up" | "happy" | "instant" | "surprised";
     emoji: string;
     isInstant: boolean;
     postedAt: string;
