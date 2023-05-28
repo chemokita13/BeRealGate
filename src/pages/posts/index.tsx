@@ -1,5 +1,6 @@
 import FriendPosts from "@/app/components/friendPosts";
 import PostElement from "@/app/components/post";
+import Layout from "@/app/layout";
 import axiosInstance from "@/constants/axiosInstance";
 import {
     ApiResponse,
@@ -50,25 +51,30 @@ function PostFeed() {
     }, []);
 
     return (
-        <div className="MainComponentContainer">
-            {userPost && (
+        <Layout>
+            <div className="MainComponentContainer">
+                {userPost && (
+                    <div>
+                        <h1>Your post: @{userPost.user.username}</h1>
+                        {userPost.posts.map((post: Post) => {
+                            return <PostElement post={post} key={post.id} />;
+                        })}
+                        <p>Posts made: {userPost.posts.length}</p>
+                        <p>Remaining posts: {postsRemaining}</p>
+                    </div>
+                )}
                 <div>
-                    <h1>Your post: @{userPost.user.username}</h1>
-                    {userPost.posts.map((post: Post) => {
-                        return <PostElement post={post} key={post.id} />;
+                    {posts.map((Fpost: FriendsPost) => {
+                        return (
+                            <FriendPosts
+                                FriendPost={Fpost}
+                                key={Fpost.user.id}
+                            />
+                        );
                     })}
-                    <p>Posts made: {userPost.posts.length}</p>
-                    <p>Remaining posts: {postsRemaining}</p>
                 </div>
-            )}
-            <div>
-                {posts.map((Fpost: FriendsPost) => {
-                    return (
-                        <FriendPosts FriendPost={Fpost} key={Fpost.user.id} />
-                    );
-                })}
             </div>
-        </div>
+        </Layout>
     );
 }
 
