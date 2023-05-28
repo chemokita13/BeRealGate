@@ -2,6 +2,13 @@ import { RealMojisEntity } from "@/types/types";
 import React from "react";
 
 function RealMoji({ realMoji }: { realMoji: RealMojisEntity }) {
+    const textToMogi = {
+        heartEyes: "😍",
+        up: "👍",
+        happy: "😀",
+        surprised: "😮",
+        instant: "⚡",
+    };
     return (
         <div key={realMoji.id}>
             <img
@@ -10,7 +17,8 @@ function RealMoji({ realMoji }: { realMoji: RealMojisEntity }) {
                 height={realMoji.media.height / 10}
             />
             <h3>
-                {realMoji.user.username} - {realMoji.type}
+                {realMoji.user.username} -
+                {textToMogi[realMoji.type] || realMoji.type}
             </h3>
         </div>
     );
