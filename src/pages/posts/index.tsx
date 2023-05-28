@@ -23,7 +23,22 @@ function PostFeed() {
     // Remaining posts state
     const [postsRemaining, setPostsRemaining] = useState<number>(0);
 
+    const reFreshToken = async (): Promise<void> => {
+        const oldToken = cookies.get("token"); // Get new token
+        const { data, status }: { data: ApiResponse; status: number } =
+            await axiosInstance.post("login/refresh", { token: oldToken });
+        if (status !== 201) {
+            alert(
+                "Error refreshing token, maybe you are gonna to be logged out"
+            );
+        }
+        const newToken = data.data.token; // Get new token
+        console.log(data);
+        cookies.set("token", newToken, { path: "/" }); // Set new token
+    };
+
     const getPosts = async (): Promise<void> => {
+        await reFreshToken(); // Refresh token
         try {
             const token = cookies.get("token"); // Get new token
             const { data }: { data: ApiResponse } = await axiosInstance.get(
