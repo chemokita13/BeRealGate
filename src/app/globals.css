@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+main {
+    background: #000;
+}
+
+.carousel {
+    scrollbar-width: 0;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    scroll-snap-align: center;
+}
+
+.carousel div {
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scroll-snap-align: center;
+}

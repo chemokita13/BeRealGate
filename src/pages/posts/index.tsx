@@ -12,10 +12,10 @@ import {
 } from "@/types/types";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Cookies from "universal-cookie";
+import Cookie from "cookie-universal";
 
 function PostFeed() {
-    const cookies = new Cookies(); // Cookies instance
+    const cookies = Cookie(); // Cookies instance
     const router = useRouter(); // Next router instance
     // Posts state
     const [posts, setPosts] = useState<FriendsPost[]>([]);
@@ -54,7 +54,6 @@ function PostFeed() {
             );
         }
         const newToken = data.data.token; // Get new token
-        console.log(data);
         cookies.set("token", newToken, { path: "/" }); // Set new token
     };
 
@@ -89,26 +88,45 @@ function PostFeed() {
 
     return (
         <Layout>
-            <div className="MainComponentContainer">
+            <main className="min-h-screen text-white bg-black min-w-screen sm:flex sm:flex-col sm:items-center">
                 {userPost ? (
-                    <div>
-                        <h1>Your post: @{userPost.user.username}</h1>
-                        {userPost.posts.map((post: Post) => {
+                    <div className="flex flex-col items-center mx-1 border-2 border-white rounded-xl sm:w-1/3">
+                        <div className="flex flex-row gap-3 p-3">
+                            <img
+                                src={userPost.user.profilePicture.url}
+                                className="rounded-full"
+                                width={userPost.user.profilePicture.width / 10}
+                                height={
+                                    userPost.user.profilePicture.height / 10
+                                }
+                            />
+                            <h1 className="text-2xl font-extrabold sm:text-4xl">
+                                @{userPost.user.username}
+                            </h1>
+                        </div>
+                        {userPost.posts.map((post: Post, index: number) => {
                             return (
                                 <PostElement
                                     post={post}
                                     key={post.id}
-                                    username={userInfo?.username || ""}
+                                    username={userPost.user.username}
+                                    order={index}
+                                    authorName={userPost.user.username}
+                                    totalPosts={userPost.posts.length}
                                 />
                             );
                         })}
-                        <p>Posts made: {userPost.posts.length}</p>
-                        <p>Remaining posts: {postsRemaining}</p>
+                        <ul className="flex flex-col p-1 m-1 border border-white rounded-xl">
+                            <li>Posts made: {userPost.posts.length}</li>
+                            <li>Remaining posts: {postsRemaining}</li>
+                        </ul>
                     </div>
                 ) : (
-                    <h1>You don't have any post</h1>
+                    <h1 className="text-center">
+                        You don't have any posts yet
+                    </h1>
                 )}
-                <div>
+                <div className="h-full mt-3 sm:flex sm:flex-row sm:flex-wrap sm:justify-center">
                     {posts.map((Fpost: FriendsPost) => {
                         return (
                             <FriendPosts
@@ -119,7 +137,7 @@ function PostFeed() {
                         );
                     })}
                 </div>
-            </div>
+            </main>
         </Layout>
     );
 }

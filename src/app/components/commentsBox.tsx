@@ -1,7 +1,7 @@
 import axiosInstance from "@/constants/axiosInstance";
 import { ApiResponse, CommentsEntity, Post } from "@/types/types";
 import React, { useState } from "react";
-import Cookies from "universal-cookie";
+import Cookie from "cookie-universal";
 
 function CommentsBox({
     setPostInstance,
@@ -12,7 +12,8 @@ function CommentsBox({
     postInstance: Post;
     username: string;
 }) {
-    const cookies = new Cookies(); // Cookies instance
+    const cookies = Cookie();
+    // Cookies instance
     const [comment, setComment] = useState<string>(""); // comment state
     const handleDeleteComment = async (commentId: string) => {
         const token = cookies.get("token"); // Get new token
@@ -58,7 +59,7 @@ function CommentsBox({
                     },
                 }
             );
-        if (status !== 200) {
+        if (status !== 201) {
             alert("Something went wrong");
             return;
         }
@@ -77,17 +78,22 @@ function CommentsBox({
                 {postInstance.comments.map((comment: CommentsEntity) => {
                     return (
                         <div key={comment.id}>
-                            <h5>{comment.user.username}</h5>
-                            <p>{comment.content}</p>
-                            {comment.user.username === username && (
-                                <button
-                                    onClick={() =>
-                                        handleDeleteComment(comment.id)
-                                    }
-                                >
-                                    Delete
-                                </button>
-                            )}
+                            <h5 className="font-bold text-center underline">
+                                @{comment.user.username}
+                            </h5>
+                            <div className="flex flex-col">
+                                <p className="text-left">{comment.content}</p>
+                                {comment.user.username === username && (
+                                    <button
+                                        onClick={() =>
+                                            handleDeleteComment(comment.id)
+                                        }
+                                        className="text-red-500"
+                                    >
+                                        Delete
+                                    </button>
+                                )}
+                            </div>
                         </div>
                     );
                 })}
@@ -99,6 +105,7 @@ function CommentsBox({
                         name="comment"
                         id="comment"
                         onChange={(e) => setComment(e.currentTarget.value)}
+                        className="bg-black border border-white"
                     />
                     <button type="submit">Comment</button>
                 </form>
