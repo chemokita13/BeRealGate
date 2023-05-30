@@ -2,11 +2,12 @@ import RootLayout from "@/app/layout";
 import { useState } from "react";
 import axios from "@/constants/axiosInstance"; /// NOT AXIOS MODULE; AXIOS INSTANCE FROM CONSTANTS
 import { ApiResponse } from "@/types/types";
-import Cookies from "universal-cookie";
 import { useRouter } from "next/navigation";
+import Cookie from "cookie-universal";
 
 function Login() {
-    const cookies = new Cookies(); // Cookies instance
+    const cookies = Cookie();
+    // Cookies instance
     const router = useRouter(); // Next router instance
 
     const [sentCode, setSentCode] = useState<boolean>(false); // If otpCode was sent to phone is true, else false

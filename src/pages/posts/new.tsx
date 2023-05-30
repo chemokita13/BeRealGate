@@ -2,14 +2,15 @@ import axiosInstance from "@/constants/axiosInstance";
 import { PostData } from "@/types/types";
 import { useRouter } from "next/navigation";
 import React, { use, useEffect, useState } from "react";
-import Cookies from "universal-cookie";
+import Cookie from "cookie-universal";
 
 function NewPost() {
     useRouter().push("/posts");
     useEffect(() => {
         alert("Actually not working, but it will be soon");
     }, []);
-    const cookies = new Cookies();
+    const cookies = Cookie();
+
     const [img1, setImg1] = useState<Uint8Array>();
     const [img2, setImg2] = useState<Uint8Array>();
     const [postData, setPostData] = useState<PostData>({
