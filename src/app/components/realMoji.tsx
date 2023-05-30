@@ -11,15 +11,18 @@ function RealMoji({ realMoji }: { realMoji: RealMojisEntity }) {
     };
     return (
         <div key={realMoji.id}>
-            <img
-                src={realMoji.media.url}
-                width={realMoji.media.width / 10}
-                height={realMoji.media.height / 10}
-            />
-            <h3>
-                {realMoji.user.username} -
-                {textToMogi[realMoji.type] || realMoji.type}
-            </h3>
+            <div className="relative w-[50px] aspect-square">
+                <img
+                    src={realMoji.media.url}
+                    width={50}
+                    height={50}
+                    className="rounded-full"
+                />
+                <span className="absolute bottom-0 right-[-10px]">
+                    {textToMogi[realMoji.type]}
+                </span>
+            </div>
+            <h3>@{realMoji.user.username}</h3>
         </div>
     );
 }
