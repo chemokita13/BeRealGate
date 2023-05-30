@@ -38,15 +38,10 @@ export interface RealMojisEntity {
     postedAt: string;
 }
 export interface FriendsPost {
-    user: User1;
+    user: User;
     momentId: string;
     region: string;
     posts: Post[];
-}
-export interface User1 {
-    id: string;
-    username: string;
-    profilePicture?: ProfilePictureOrMediaOrPrimaryOrSecondary1 | null;
 }
 export interface ProfilePictureOrMediaOrPrimaryOrSecondary1 {
     url: string;
@@ -77,7 +72,7 @@ export interface Location {
 
 export interface CommentsEntity {
     id: string;
-    user: User1;
+    user: User;
     content: string;
     postedAt: string;
 }
