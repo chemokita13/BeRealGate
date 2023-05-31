@@ -13,8 +13,10 @@ function CommentsBox({
     username: string;
 }) {
     const cookies = Cookie();
+    const newCommentInputRef = React.createRef<HTMLInputElement>(); // New comment input ref
     // Cookies instance
     const [comment, setComment] = useState<string>(""); // comment state
+    const [showComments, setShowComments] = useState<boolean>(false); // Show comments state
     const handleDeleteComment = async (commentId: string) => {
         const token = cookies.get("token"); // Get new token
         const { status, data }: { status: number; data: ApiResponse } =
@@ -45,50 +47,65 @@ function CommentsBox({
         e: React.FormEvent<HTMLFormElement>
     ): Promise<void> => {
         e.preventDefault();
-        const token = cookies.get("token"); // Get new token
-        const { status, data }: { status: number; data: ApiResponse } =
-            await axiosInstance.post(
-                "post/comment",
-                {
-                    comment: comment,
-                    postId: postInstance.id,
-                },
-                {
-                    headers: {
-                        token: token,
+        try {
+            const token = cookies.get("token"); // Get new token
+            const { data }: { status: number; data: ApiResponse } =
+                await axiosInstance.post(
+                    "post/comment",
+                    {
+                        comment: comment,
+                        postId: postInstance.id,
                     },
-                }
-            );
-        if (status !== 201) {
+                    {
+                        headers: {
+                            token: token,
+                        },
+                    }
+                );
+            const newComent: CommentsEntity = data.data;
+
+            setPostInstance(() => {
+                return {
+                    ...postInstance,
+                    comments: [...postInstance.comments, newComent],
+                };
+            });
+            newCommentInputRef.current!.value = "";
+        } catch (error) {
             alert("Something went wrong");
             return;
         }
-        const newComent: CommentsEntity = data.data;
-
-        setPostInstance(() => {
-            return {
-                ...postInstance,
-                comments: [...postInstance.comments, newComent],
-            };
-        });
     };
     return (
-        <div>
-            <div>
+        <div className="flex flex-col items-center w-full">
+            <div
+                className={`flex flex-col items-center w-1/2 ${
+                    showComments ? "h-full" : "h-0"
+                } overflow-hidden`}
+            >
                 {postInstance.comments.map((comment: CommentsEntity) => {
                     return (
-                        <div key={comment.id}>
-                            <h5 className="font-bold text-center underline">
+                        <div
+                            key={comment.id}
+                            className={`${
+                                comment.user.username === username
+                                    ? "text-right self-end"
+                                    : "text-left self-start"
+                            } w-1/2`}
+                        >
+                            <h5 className="font-bold underline">
                                 @{comment.user.username}
                             </h5>
                             <div className="flex flex-col">
-                                <p className="text-left">{comment.content}</p>
+                                <p className="border-t border-white">
+                                    {comment.content}
+                                </p>
                                 {comment.user.username === username && (
                                     <button
                                         onClick={() =>
                                             handleDeleteComment(comment.id)
                                         }
-                                        className="text-red-500"
+                                        className="text-red-500 border border-red-500 rounded-md"
                                     >
                                         Delete
                                     </button>
@@ -98,16 +115,37 @@ function CommentsBox({
                     );
                 })}
             </div>
-            <div>
+            <button
+                className="text-white underline"
+                onClick={() => {
+                    postInstance.comments.length > 0 &&
+                        setShowComments(!showComments);
+                }}
+            >
+                {postInstance.comments.length <= 0
+                    ? "no comments yet"
+                    : `${
+                          showComments
+                              ? "Hide"
+                              : "Show " + postInstance.comments.length
+                      } comments`}
+            </button>
+            <div className="p-1 m-1 border border-white border-dashed rounded-md">
                 <form onSubmit={(e) => handleFormSubmit(e)}>
                     <input
                         type="text"
                         name="comment"
                         id="comment"
+                        ref={newCommentInputRef}
                         onChange={(e) => setComment(e.currentTarget.value)}
                         className="bg-black border border-white"
                     />
-                    <button type="submit">Comment</button>
+                    <button
+                        type="submit"
+                        className="text-black bg-white border border-black rounded-md"
+                    >
+                        Comment
+                    </button>
                 </form>
             </div>
         </div>

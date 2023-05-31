@@ -1,4 +1,4 @@
-import { Post, RealMojisEntity } from "@/types/types";
+import { Post, RealMojisEntity, sc } from "@/types/types";
 import { useState } from "react";
 import CommentsBox from "./commentsBox";
 import RealMoji from "./realMoji";
@@ -24,6 +24,14 @@ function PostElement({
             className="flex flex-col items-center justify-start w-screen h-full text-center sm:w-full"
             id={order.toString() + authorName}
         >
+            {postInstance.screenshots && (
+                <span className="text-left">
+                    Screenshots:{" "}
+                    {postInstance.screenshots.map((screenshot: sc) => {
+                        return screenshot.user.username;
+                    })}
+                </span>
+            )}
             <div className="relative">
                 <img
                     onClick={() => setFocusFirst(!focusFirst)}
@@ -59,6 +67,7 @@ function PostElement({
                 setPostInstance={setPostInstance}
                 username={username}
             />
+            {/** Do not try to understand that, hahahah */}
             {totalPosts > 1 && (
                 <a
                     href={`#${
