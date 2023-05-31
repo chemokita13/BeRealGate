@@ -90,6 +90,7 @@ function PostFeed() {
     };
 
     useEffect(() => {
+        toast.info("Loading posts, please, wait");
         getPosts();
     }, []);
 
