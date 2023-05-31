@@ -6,7 +6,7 @@ function Music({ music }: { music: Music }) {
         <div>
             <h3>
                 <a href={music.openUrl}>
-                    {music.track} -{music.artist}
+                    🎵 {music.track} -{music.artist} 🎵
                 </a>
             </h3>
         </div>
