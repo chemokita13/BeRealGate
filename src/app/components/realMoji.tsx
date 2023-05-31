@@ -10,7 +10,7 @@ function RealMoji({ realMoji }: { realMoji: RealMojisEntity }) {
         instant: "⚡",
     };
     return (
-        <div key={realMoji.id}>
+        <div key={realMoji.id} className="flex flex-col items-center m-2">
             <div className="relative w-[50px] aspect-square">
                 <img
                     src={realMoji.media.url}
@@ -22,7 +22,7 @@ function RealMoji({ realMoji }: { realMoji: RealMojisEntity }) {
                     {textToMogi[realMoji.type]}
                 </span>
             </div>
-            <h3>@{realMoji.user.username}</h3>
+            <p className="text-xs">@{realMoji.user.username}</p>
         </div>
     );
 }

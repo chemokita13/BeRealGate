@@ -48,17 +48,17 @@ function PostElement({
                 />
             </div>
             <p>{postInstance.caption}</p>
+            {postInstance.music && <Music music={postInstance.music} />}
+            <div className="flex flex-row flex-wrap justify-center">
+                {postInstance.realMojis.map((realMoji: RealMojisEntity) => {
+                    return <RealMoji realMoji={realMoji} key={realMoji.id} />;
+                })}
+            </div>
             <CommentsBox
                 postInstance={postInstance}
                 setPostInstance={setPostInstance}
                 username={username}
             />
-            <div>
-                {postInstance.realMojis.map((realMoji: RealMojisEntity) => {
-                    return <RealMoji realMoji={realMoji} key={realMoji.id} />;
-                })}
-            </div>
-            {postInstance.music && <Music music={postInstance.music} />}
             {totalPosts > 1 && (
                 <a
                     href={`#${
