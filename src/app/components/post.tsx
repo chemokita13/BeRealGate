@@ -45,7 +45,7 @@ function PostElement({
                     className="absolute top-[10px] left-[10px] border-4 border-black rounded-lg m-0 min-w-[75px] min-h-[100px] max-w-[100px] max-h-[150px]"
                 />
                 <img
-                    className="min-h-[400px] min-w-[300px] max-w-[375px] max-h-[500px] rounded-md"
+                    className="min-h-[300px] min-w-[200px] max-w-[375px] max-h-[500px] rounded-md"
                     src={
                         focusFirst
                             ? postInstance.primary.url
