@@ -21,7 +21,7 @@ function CommentsBox({
     const handleDeleteComment = async (commentId: string) => {
         const token = cookies.get("token"); // Get new token
         const { status, data }: { status: number; data: ApiResponse } =
-            await axiosInstance.delete(`post/comment`, {
+            await axiosInstance.delete("post/comment", {
                 headers: {
                     token: token,
                 },
