@@ -2,6 +2,8 @@ import Footer from "./components/footer";
 import Nav from "./components/nav";
 import Head from "next/head";
 import "./globals.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (
         <div>
@@ -22,7 +24,20 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <meta name="copiright" content="Any, license free!!" />
             </Head>
             <Nav />
-            {children}
+            <main>
+                <ToastContainer
+                    theme="colored"
+                    draggable
+                    position="top-right"
+                    pauseOnHover
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    closeButton={false}
+                />
+                {children}
+            </main>
             <Footer />
         </div>
     );

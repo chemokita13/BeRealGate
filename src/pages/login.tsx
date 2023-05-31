@@ -4,6 +4,7 @@ import axios from "@/constants/axiosInstance"; /// NOT AXIOS MODULE; AXIOS INSTA
 import { ApiResponse } from "@/types/types";
 import { useRouter } from "next/navigation";
 import Cookie from "cookie-universal";
+import { toast } from "react-toastify";
 
 function Login() {
     const cookies = Cookie();
@@ -24,14 +25,15 @@ function Login() {
                     phone: phone,
                 });
             if (status !== 201) {
-                alert("Error sending code");
+                toast.error("Error sending code");
                 return;
             }
             setOtpSession(data.data.otpSesion);
             cookies.set("otpSession", data.data.otpSesion, { path: "/" }); // Save it in cookies if user reload page
             setSentCode(true);
+            toast.info("Code sent");
         } catch (error) {
-            alert("Error sending code");
+            toast.error("Error sending code");
             return;
         }
     };
@@ -45,7 +47,7 @@ function Login() {
             const otpSessionToPost: string =
                 otpSession || cookies.get("otpSession");
             if (otpSessionToPost === "") {
-                alert("Error getting otp sesion code");
+                toast.warn("Error getting otp sesion code");
                 return;
             }
             const { status, data } = await axios.post("login/verify", {
@@ -54,7 +56,7 @@ function Login() {
             });
 
             if (status !== 201) {
-                alert("Error verifying otp code");
+                toast.error("Error verifying otp code");
                 return;
             }
 
@@ -63,11 +65,11 @@ function Login() {
             // save token in cookies
             cookies.set("token", data.data.token, { path: "/" });
             // Notify user
-            alert("Login success");
+            toast.success("Logged in");
             // redirect to posts page
             router.push("/posts");
         } catch (error) {
-            alert("Error verifying otp code");
+            toast.error("Error verifying otp code");
         }
     };
 

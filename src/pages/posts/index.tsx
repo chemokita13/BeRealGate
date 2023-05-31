@@ -13,6 +13,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Cookie from "cookie-universal";
+import { toast } from "react-toastify";
 
 function PostFeed() {
     const cookies = Cookie(); // Cookies instance
@@ -34,27 +35,33 @@ function PostFeed() {
                 },
             }); // Get user info
             if (status !== 200) {
-                alert("Error getting user info, something is going wrong");
+                toast.warn("Error getting user info, something is going wrong");
             }
             const userInfoRes: UserInfo = data.data; // Get user info
             setUserInfo(userInfoRes); // Set user info state
         } catch (error) {
-            alert("Error getting user info, something is going wrong");
+            toast.warn("Error getting user info, something is going wrong");
             console.error(error);
         }
     };
 
     const reFreshToken = async (): Promise<void> => {
-        const oldToken = cookies.get("token"); // Get new token
-        const { data, status }: { data: ApiResponse; status: number } =
-            await axiosInstance.post("login/refresh", { token: oldToken });
-        if (status !== 201) {
-            alert(
+        try {
+            const oldToken = cookies.get("token"); // Get new token
+            const { data, status }: { data: ApiResponse; status: number } =
+                await axiosInstance.post("login/refresh", { token: oldToken });
+            if (status !== 201) {
+                toast.warn(
+                    "Error refreshing token, maybe you are gonna to be logged out"
+                );
+            }
+            const newToken = data.data.token; // Get new token
+            cookies.set("token", newToken, { path: "/" }); // Set new token
+        } catch (error) {
+            toast.warn(
                 "Error refreshing token, maybe you are gonna to be logged out"
             );
         }
-        const newToken = data.data.token; // Get new token
-        cookies.set("token", newToken, { path: "/" }); // Set new token
     };
 
     const getPosts = async (): Promise<void> => {
@@ -77,7 +84,7 @@ function PostFeed() {
             setPostsRemaining(() => PostData.remainingPosts); // Set remaining posts state
             await getUserInfo(token); // Get user info
         } catch (error) {
-            alert("Error getting posts, try login again");
+            toast.error("Error getting posts, try login again");
             router.push("/login");
         }
     };
@@ -88,7 +95,7 @@ function PostFeed() {
 
     return (
         <Layout>
-            <main className="min-h-screen text-white bg-black min-w-screen sm:flex sm:flex-col sm:items-center">
+            <div className="min-h-screen text-white bg-black min-w-screen sm:flex sm:flex-col sm:items-center">
                 {userPost ? (
                     <div className="flex flex-col items-center mx-1 border-2 border-white rounded-xl sm:w-1/3">
                         <div className="flex flex-row gap-3 p-3">
@@ -137,7 +144,7 @@ function PostFeed() {
                         );
                     })}
                 </div>
-            </main>
+            </div>
         </Layout>
     );
 }

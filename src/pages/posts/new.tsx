@@ -3,11 +3,12 @@ import { PostData } from "@/types/types";
 import { useRouter } from "next/navigation";
 import React, { use, useEffect, useState } from "react";
 import Cookie from "cookie-universal";
+import { toast } from "react-toastify";
 
 function NewPost() {
     useRouter().push("/posts");
     useEffect(() => {
-        alert("Actually not working, but it will be soon");
+        toast.warn("Actually not working, but it will be soon");
     }, []);
     const cookies = Cookie();
 

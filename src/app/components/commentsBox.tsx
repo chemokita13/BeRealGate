@@ -2,6 +2,7 @@ import axiosInstance from "@/constants/axiosInstance";
 import { ApiResponse, CommentsEntity, Post } from "@/types/types";
 import React, { useState } from "react";
 import Cookie from "cookie-universal";
+import { toast } from "react-toastify";
 
 function CommentsBox({
     setPostInstance,
@@ -30,7 +31,7 @@ function CommentsBox({
                 },
             });
         if (status !== 201) {
-            alert("Something went wrong");
+            toast.error("Error deleting comment");
             return;
         }
         setPostInstance(() => {
@@ -41,7 +42,7 @@ function CommentsBox({
                 ),
             };
         });
-        alert(data.message);
+        toast.success("Comment deleted");
     };
     const handleFormSubmit = async (
         e: React.FormEvent<HTMLFormElement>
@@ -71,8 +72,9 @@ function CommentsBox({
                 };
             });
             newCommentInputRef.current!.value = "";
+            toast.success("Comment posted");
         } catch (error) {
-            alert("Something went wrong");
+            toast.error("Error posting comment");
             return;
         }
     };
