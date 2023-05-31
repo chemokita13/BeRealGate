@@ -30,10 +30,6 @@ function CommentsBox({
                     postId: postInstance.id,
                 },
             });
-        if (status !== 201) {
-            toast.error("Error deleting comment");
-            return;
-        }
         setPostInstance(() => {
             return {
                 ...postInstance,
