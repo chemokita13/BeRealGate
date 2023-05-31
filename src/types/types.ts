@@ -64,7 +64,16 @@ export interface Post {
     creationDate: string;
     updatedAt: string;
     music?: Music | null;
+    screenshots?: sc[] | null;
 }
+
+export interface sc {
+    id: string;
+    postId: string;
+    snappedAt: string;
+    user: User;
+}
+
 export interface Location {
     latitude: number;
     longitude: number;
