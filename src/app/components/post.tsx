@@ -40,9 +40,9 @@ function PostElement({
                             ? postInstance.secondary.url
                             : postInstance.primary.url
                     }
-                    //? width={1500 / 10}
-                    //? height={2000 / 10}
-                    className="absolute top-[10px] left-[10px] border-4 border-black rounded-lg m-0 min-w-[100px] min-h-[150px] max-w-[150px] max-h-[200px]"
+                    //? width={1500 / 15}
+                    //? height={2000 / 15}
+                    className="absolute top-[10px] left-[10px] border-4 border-black rounded-lg m-0 min-w-[75px] min-h-[100px] max-w-[100px] max-h-[150px]"
                 />
                 <img
                     className="min-h-[400px] min-w-[300px] max-w-[375px] max-h-[500px] rounded-md"
