@@ -90,13 +90,16 @@ function PostFeed() {
     };
 
     useEffect(() => {
-        toast.info("Loading posts, please, wait");
-        getPosts();
+        toast.promise(getPosts(), {
+            pending: "Loading posts, please, wait",
+            success: "Posts loaded",
+            error: "Error getting posts, try login again",
+        });
     }, []);
 
     return (
         <Layout>
-            <div className="min-h-screen text-white bg-black min-w-screen sm:flex sm:flex-col sm:items-center">
+            <div className="min-h-screen pb-5 text-white bg-black min-w-screen sm:flex sm:flex-col sm:items-center">
                 {userPost ? (
                     <div className="flex flex-col items-center mx-1 border-2 border-white rounded-xl sm:w-1/3">
                         <div className="flex flex-row gap-3 p-3">
