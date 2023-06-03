@@ -23,3 +23,16 @@ main {
     scroll-behavior: smooth;
     scroll-snap-align: center;
 }
+@media (min-width: 640px) {
+    #main-index {
+        background-color: black;
+        height: 100vh;
+    }
+}
+
+#main-index {
+    background-image: url("../../public/main-bg.svg");
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
