@@ -5,6 +5,7 @@ import { ApiResponse } from "@/types/types";
 import { useRouter } from "next/navigation";
 import Cookie from "cookie-universal";
 import { toast } from "react-toastify";
+import Flip from "react-reveal/Flip";
 
 function Login() {
     const cookies = Cookie();
@@ -23,17 +24,22 @@ function Login() {
             const { data, status }: { data: ApiResponse; status: number } =
                 await axios.post("login/send-code", {
                     phone: phone,
+                    Headers: {
+                        "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+                        cors: "*",
+                    },
                 });
             if (status !== 201) {
                 toast.error("Error sending code");
                 return;
             }
-            setOtpSession(data.data.otpSesion);
-            cookies.set("otpSession", data.data.otpSesion, { path: "/" }); // Save it in cookies if user reload page
+            setOtpSession(data.data.otpSession);
+            cookies.set("otpSession", data.data.otpSession, { path: "/" }); // Save it in cookies if user reload page
             setSentCode(true);
-            toast.info("Code sent");
+            toast.success("Code sent");
         } catch (error) {
             toast.error("Error sending code");
+            console.log(error);
             return;
         }
     };
@@ -46,7 +52,7 @@ function Login() {
             // Check if otpSession is in state or cookies
             const otpSessionToPost: string =
                 otpSession || cookies.get("otpSession");
-            if (otpSessionToPost === "") {
+            if (!otpSessionToPost) {
                 toast.warn("Error getting otp sesion code");
                 return;
             }
@@ -95,29 +101,73 @@ function Login() {
 
     return (
         <RootLayout>
-            <main>
-                <h1> BeReal Login Form</h1>
-                <form hidden={sentCode} onSubmit={(e) => postPhoneSubmit(e)}>
-                    <input
-                        type="text"
-                        name="phoneNumber"
-                        id="phoneNumber"
-                        placeholder="+00 111 11 11 11"
-                        onChange={(e) => handlePhoneChange(e)}
-                    />
-                    <button type="submit">Submit</button>
-                </form>
-                <form hidden={!sentCode} onSubmit={(e) => postOtpSubmit(e)}>
-                    <input
-                        type="text"
-                        name="otpCode"
-                        id="otpCode"
-                        placeholder="Otp code"
-                        onChange={(e) => handleOtpChange(e)}
-                    />
-                    <button type="submit">Submit</button>
-                    <span onClick={() => resendCode()}>Resend code?</span>
-                </form>
+            <main className="flex flex-col items-center w-screen h-screen text-white">
+                <h1 className="m-5 text-5xl">Login Form</h1>
+                <div className="flex flex-col items-center">
+                    <Flip top>
+                        <form
+                            className={`flex flex-col items-center p-10 border border-white rounded-lg w-3/4 sm:w-auto ${
+                                sentCode && "hidden"
+                            }`}
+                            onSubmit={(e) =>
+                                toast.promise(postPhoneSubmit(e), {
+                                    pending: "Sending code",
+                                    error: "Error sending code",
+                                })
+                            }
+                        >
+                            <span className="m-1">
+                                Enter your phone number to get an otp code
+                            </span>
+                            <input
+                                className="px-5 py-1 text-black rounded-md placeholder:text-center"
+                                type="text"
+                                name="phoneNumber"
+                                id="phoneNumber"
+                                placeholder="+00111223344"
+                                onChange={(e) => handlePhoneChange(e)}
+                            />
+                            <button
+                                type="submit"
+                                className="px-2 py-1 m-2 border border-green-500 rounded-lg"
+                            >
+                                Submit
+                            </button>
+                        </form>
+                    </Flip>
+                    <Flip bottom>
+                        <form
+                            className={`flex flex-col items-center p-10 border-dashed border border-white rounded-lg w-3/4 sm:w-auto ${
+                                !sentCode && "hidden"
+                            }`}
+                            onSubmit={(e) => postOtpSubmit(e)}
+                        >
+                            <span className="m-1">
+                                Enter the otp code sent to your phone number
+                            </span>
+                            <input
+                                className="px-5 py-1 text-black rounded-md placeholder:text-center"
+                                type="text"
+                                name="otpCode"
+                                id="otpCode"
+                                placeholder="0123456"
+                                onChange={(e) => handleOtpChange(e)}
+                            />
+                            <button
+                                type="submit"
+                                className="px-2 py-1 m-2 border border-green-500 rounded-lg"
+                            >
+                                Submit
+                            </button>
+                            <span
+                                onClick={() => resendCode()}
+                                className="underline cursor-pointer"
+                            >
+                                Resend code?
+                            </span>
+                        </form>
+                    </Flip>
+                </div>
             </main>
         </RootLayout>
     );
