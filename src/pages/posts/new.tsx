@@ -6,9 +6,10 @@ import Cookie from "cookie-universal";
 import { toast } from "react-toastify";
 
 function NewPost() {
+    const router = useRouter();
     useEffect(() => {
         toast.warn("Actually not working, but it will be soon");
-        useRouter().push("/posts");
+        router.push("/posts");
     }, []);
     const cookies = Cookie();
 
