@@ -54,6 +54,11 @@ dependencies:
     specifier: 5.0.4
     version: 5.0.4
 
+devDependencies:
+  '@types/reveal':
+    specifier: ^4.2.0
+    version: 4.2.0
+
 packages:
 
   /@alloc/quick-lru@5.2.0:
@@ -322,6 +327,10 @@ packages:
       '@types/scheduler': 0.16.3
       csstype: 3.1.2
     dev: false
+
+  /@types/reveal@4.2.0:
+    resolution: {integrity: sha512-lhTCUrk8pU/9SWcqbLwCy/AFjCp9S2hcDGoKAIycWGcHujUrDKMXWVkOvbSWk/gohZwwfuxQxucBaqvYAM5DTQ==}
+    dev: true
 
   /@types/scheduler@0.16.3:
     resolution: {integrity: sha512-5cJ8CB4yAx7BH1oMvdU0Jh9lrEXyPkar6F9G/ERswkCuvP4KQZfZkSjcMbAICCpQTN4OuZn8tz0HiKv9TGZgrQ==}
