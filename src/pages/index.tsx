@@ -12,7 +12,7 @@ export default function Home() {
                     A new way to BeReal.
                 </h1>
                 <h2 className="ml-10 text-2xl font-semibold cursor-pointer sm:ml-20">
-                    Say "Hello!" to <u>BeReal Gate</u>
+                    Say &quot;Hello!&quot; to <u>BeReal Gate</u>
                 </h2>
                 <div className="flex flex-row items-center gap-5 m-5 mb-56 ml-14 sm:ml-24">
                     <Link
