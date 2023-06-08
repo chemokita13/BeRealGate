@@ -2,10 +2,10 @@ import RootLayout from "@/app/layout";
 import { useState } from "react";
 import axios from "@/constants/axiosInstance"; /// NOT AXIOS MODULE; AXIOS INSTANCE FROM CONSTANTS
 import { ApiResponse } from "@/types/types";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import Cookie from "cookie-universal";
 import { toast } from "react-toastify";
-import Flip from "react-reveal/Flip";
+const Flip = require("react-reveal/Flip"); // Import doesnt working
 
 function Login() {
     const cookies = Cookie();

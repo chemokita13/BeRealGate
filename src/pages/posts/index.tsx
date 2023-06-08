@@ -10,7 +10,7 @@ import {
     UserInfo,
     UserPosts,
 } from "@/types/types";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Cookie from "cookie-universal";
 import { toast } from "react-toastify";
@@ -134,7 +134,7 @@ function PostFeed() {
                     </div>
                 ) : (
                     <h1 className="text-center">
-                        You don't have any posts yet
+                        You don&apos;t have any posts yet
                     </h1>
                 )}
                 <div className="h-full mt-3 sm:flex sm:flex-row sm:flex-wrap sm:justify-center">

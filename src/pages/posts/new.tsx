@@ -1,14 +1,14 @@
 import axiosInstance from "@/constants/axiosInstance";
 import { PostData } from "@/types/types";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import React, { use, useEffect, useState } from "react";
 import Cookie from "cookie-universal";
 import { toast } from "react-toastify";
 
 function NewPost() {
-    useRouter().push("/posts");
     useEffect(() => {
         toast.warn("Actually not working, but it will be soon");
+        useRouter().push("/posts");
     }, []);
     const cookies = Cookie();
 
