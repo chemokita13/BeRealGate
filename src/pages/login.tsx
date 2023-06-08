@@ -20,6 +20,12 @@ function Login() {
     // Post phone number to get otp code
     const postPhoneSubmit = async (e: React.FormEvent): Promise<void> => {
         e.preventDefault(); // Prevents page reload
+        if (!phone || phone.length === 0) {
+            toast.warn("Please enter a valid phone number", {
+                position: "top-center",
+            });
+            return;
+        }
         try {
             const { data, status }: { data: ApiResponse; status: number } =
                 await axios.post("login/send-code", {
@@ -47,7 +53,10 @@ function Login() {
     // Post otp code to get token
     const postOtpSubmit = async (e: React.FormEvent): Promise<void> => {
         e.preventDefault(); // Prevents page reload
-
+        if (!otp || otp.length === 0) {
+            toast.warn("Please enter a valid otp code");
+            return;
+        }
         try {
             // Check if otpSession is in state or cookies
             const otpSessionToPost: string =
@@ -101,7 +110,7 @@ function Login() {
 
     return (
         <RootLayout>
-            <main className="flex flex-col items-center w-screen h-screen text-white">
+            <main className="flex flex-col items-center w-screen h-screen overflow-x-hidden text-white">
                 <h1 className="m-5 text-5xl">Login Form</h1>
                 <div className="flex flex-col items-center">
                     <Flip top>
