@@ -45,7 +45,7 @@ function CommentsBox({
     ): Promise<void> => {
         e.preventDefault();
         try {
-            const token = cookies.get("token"); // Get new token
+            const token = cookies.get("token") || localStorage.getItem("token"); // Get new token
             const { data }: { status: number; data: ApiResponse } =
                 await axiosInstance.post(
                     "post/comment",
