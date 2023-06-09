@@ -10,10 +10,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div>
             <Analytics />
             <Head>
-                <title>BeReal API web</title>
+                <title>BeReal Gate</title>
                 <meta
                     name="description"
-                    content="BeReal API web from https://github.com/chemokita13/beReal-api"
+                    content="BeReal Gate from https://github.com/chemokita13/BeRealGate"
                 />
                 <meta
                     name="author"
@@ -21,7 +21,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 />
                 <meta
                     name="keywords"
-                    content="BeReal, BeFake, BeReal API, BeReal API web, BeReal API web"
+                    content="BeReal, BeFake, BeReal API, BeReal API web, BeReal API web, bereal, BeRealGate"
                 />
                 <meta name="copiright" content="Any, license free!!" />
             </Head>

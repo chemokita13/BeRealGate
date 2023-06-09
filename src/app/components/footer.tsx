@@ -9,7 +9,10 @@ function Footer() {
             >
                 Scroll to top
             </a>
-            <div className="flex flex-col items-center p-1 m-5 transition-all duration-200 border border-white border-double hover:scale-110">
+            <a
+                className="flex flex-col items-center p-1 m-5 transition-all duration-200 border border-white border-double hover:scale-110"
+                href="https://github.com/chemokita13/BeRealGate"
+            >
                 <img
                     src="https://logodix.com/logo/952890.png"
                     alt="GitHub source code"
@@ -17,7 +20,7 @@ function Footer() {
                     height={50}
                 />
                 <span>View source code</span>
-            </div>
+            </a>
         </footer>
     );
 }
