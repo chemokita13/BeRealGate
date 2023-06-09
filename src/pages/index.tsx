@@ -28,7 +28,7 @@ export default function Home() {
                         Posts
                     </Link>
                     <a
-                        href=""
+                        href="https://github.com/chemokita13/BeRealGate"
                         className="px-5 py-3 text-xl transition-all duration-150 border border-white rounded-lg hover:underline hover:scale-110"
                     >
                         GitHub
