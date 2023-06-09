@@ -3,10 +3,12 @@ import Nav from "./components/nav";
 import Head from "next/head";
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
+import { Analytics } from "@vercel/analytics/react";
 import "react-toastify/dist/ReactToastify.css";
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (
         <div>
+            <Analytics />
             <Head>
                 <title>BeReal API web</title>
                 <meta
