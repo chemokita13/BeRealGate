@@ -47,7 +47,8 @@ function PostFeed() {
 
     const reFreshToken = async (): Promise<void> => {
         try {
-            const oldToken = cookies.get("token"); // Get new token
+            const oldToken =
+                cookies.get("token") || localStorage.getItem("token"); // Get new token from cookies or localstorage
             const { data, status }: { data: ApiResponse; status: number } =
                 await axiosInstance.post("login/refresh", { token: oldToken });
             if (status !== 201) {
@@ -56,7 +57,8 @@ function PostFeed() {
                 );
             }
             const newToken = data.data.token; // Get new token
-            cookies.set("token", newToken, { path: "/" }); // Set new token
+            cookies.set("token", newToken, { path: "/" }); // Set new token in cookies
+            localStorage.setItem("token", newToken); // Set new token in localstorage
         } catch (error) {
             toast.warn(
                 "Error refreshing token, maybe you are gonna to be logged out"
@@ -67,7 +69,7 @@ function PostFeed() {
     const getPosts = async (): Promise<void> => {
         await reFreshToken(); // Refresh token
         try {
-            const token = cookies.get("token"); // Get new token
+            const token = cookies.get("token") || localStorage.getItem("token"); // Get new token
             const { data }: { data: ApiResponse } = await axiosInstance.get(
                 "friends/feed",
                 {

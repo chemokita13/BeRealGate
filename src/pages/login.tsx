@@ -79,6 +79,8 @@ function Login() {
             cookies.remove("otpSession", { path: "/" });
             // save token in cookies
             cookies.set("token", data.data.token, { path: "/" });
+            // save token in localstorage
+            localStorage.setItem("token", data.data.token);
             // Notify user
             toast.success("Logged in");
             // redirect to posts page

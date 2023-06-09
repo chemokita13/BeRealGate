@@ -19,7 +19,7 @@ function CommentsBox({
     const [comment, setComment] = useState<string>(""); // comment state
     const [showComments, setShowComments] = useState<boolean>(false); // Show comments state
     const handleDeleteComment = async (commentId: string) => {
-        const token = cookies.get("token"); // Get new token
+        const token = cookies.get("token") || localStorage.getItem("token"); // Get new token
         const { status, data }: { status: number; data: ApiResponse } =
             await axiosInstance.delete("post/comment", {
                 headers: {
