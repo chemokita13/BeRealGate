@@ -11,10 +11,10 @@ export default function Home() {
                 <h1 className="p-1 text-5xl font-extrabold cursor-pointer ml-7 sm:ml-16 ">
                     A new way to BeReal.
                 </h1>
-                <h2 className="ml-10 text-2xl font-semibold cursor-pointer sm:ml-20">
-                    Say &quot;Hello!&quot; to <u>BeReal Gate</u>
+                <h2 className="text-2xl font-semibold cursor-pointer ml-7 sm:ml-20">
+                    Say &quot;Hello!&quot; to <u>BeReal Gate</u>.
                 </h2>
-                <div className="flex flex-row items-center gap-5 m-5 mb-56 ml-14 sm:ml-24">
+                <div className="flex flex-row items-center gap-5 m-5 mb-56 sm:ml-24">
                     <Link
                         href="/login"
                         className="px-5 py-3 text-xl transition-all duration-150 border border-white rounded-lg hover:underline hover:scale-110"

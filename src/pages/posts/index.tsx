@@ -117,18 +117,20 @@ function PostFeed() {
                                 @{userPost.user.username}
                             </h1>
                         </div>
-                        {userPost.posts.map((post: Post, index: number) => {
-                            return (
-                                <PostElement
-                                    post={post}
-                                    key={post.id}
-                                    username={userPost.user.username}
-                                    order={index}
-                                    authorName={userPost.user.username}
-                                    totalPosts={userPost.posts.length}
-                                />
-                            );
-                        })}
+                        <div className="flex flex-row overflow-hidden min-w-[300px] w-[375px] carousel m-auto sm:m-0">
+                            {userPost.posts.map((post: Post, index: number) => {
+                                return (
+                                    <PostElement
+                                        post={post}
+                                        key={post.id}
+                                        username={userPost.user.username}
+                                        order={index}
+                                        authorName={userPost.user.username}
+                                        totalPosts={userPost.posts.length}
+                                    />
+                                );
+                            })}
+                        </div>
                         <ul className="flex flex-col p-1 m-1 border border-white rounded-xl">
                             <li>Posts made: {userPost.posts.length}</li>
                             <li>Remaining posts: {postsRemaining}</li>

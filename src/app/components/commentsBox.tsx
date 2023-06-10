@@ -77,8 +77,8 @@ function CommentsBox({
     return (
         <div className="flex flex-col items-center w-full">
             <div
-                className={`flex flex-col items-center w-3/2 ${
-                    showComments ? "h-full" : "h-0"
+                className={`flex flex-col items-center w-[75%] ${
+                    showComments ? " h-full " : " h-0 "
                 } overflow-hidden`}
             >
                 {postInstance.comments.map((comment: CommentsEntity) => {
