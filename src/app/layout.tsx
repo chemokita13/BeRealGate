@@ -1,10 +1,11 @@
+"use client";
 import Footer from "../components/footer";
 import Nav from "../components/nav";
 import { Metadata } from "next";
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import { Analytics } from "@vercel/analytics/react";
-///import "react-toastify/dist/ReactToastify.css";
+import "react-toastify/dist/ReactToastify.css";
 export const metadata: Metadata = {
     title: "BeReal Gate",
     description: "A new way to BeReal",
@@ -21,20 +22,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <body>
                 <Analytics />
                 <Nav />
-                <main>
-                    <ToastContainer
-                        theme="colored"
-                        draggable
-                        position="top-right"
-                        pauseOnHover
-                        autoClose={5000}
-                        hideProgressBar={false}
-                        newestOnTop={false}
-                        closeOnClick
-                        closeButton={false}
-                    />
-                    {children}
-                </main>
+                <ToastContainer
+                    theme="colored"
+                    draggable
+                    position="top-right"
+                    pauseOnHover
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    closeButton={false}
+                />
+                <main>{children}</main>
                 <Footer />
             </body>
         </html>
