@@ -11,10 +11,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <Analytics />
             <Head>
                 <title>BeReal Gate</title>
-                <meta
-                    name="description"
-                    content="BeReal Gate from https://github.com/chemokita13/BeRealGate"
-                />
+                <meta name="description" content="A new way to BeReal" />
                 <meta
                     name="author"
                     content="Jose Maria Pahino, @chemokita13 on github (https://github.com/chemokita13)"
