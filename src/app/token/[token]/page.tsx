@@ -1,13 +1,13 @@
-import { useRouter } from "next/router";
+"use client";
 import React, { useEffect } from "react";
-import { toast } from "react-toastify";
 import Cookie from "cookie-universal";
+import { useRouter } from "next/navigation";
 
-function TokenGetter() {
-    const router = useRouter();
+function TokenGetter({ params }: { params: { token: string } }) {
     const cookies = Cookie();
+    const router = useRouter();
     useEffect(() => {
-        const token = router.query.token;
+        const token = params.token;
         if (!token || typeof token !== "string") {
             router.push("/");
             return;
@@ -18,7 +18,7 @@ function TokenGetter() {
         // redirect to posts
         router.push("/posts");
         return;
-    }, [router]);
+    }, []);
     return <div>TokenGetter</div>;
 }
 

@@ -1,6 +1,6 @@
-import FriendPosts from "@/app/components/friendPosts";
-import PostElement from "@/app/components/post";
-import Layout from "@/app/layout";
+"use client";
+import FriendPosts from "@/components/friendPosts";
+import PostElement from "@/components/post";
 import axiosInstance from "@/constants/axiosInstance";
 import {
     ApiResponse,
@@ -10,10 +10,10 @@ import {
     UserInfo,
     UserPosts,
 } from "@/types/types";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Cookie from "cookie-universal";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 function PostFeed() {
     const cookies = Cookie(); // Cookies instance
@@ -60,6 +60,11 @@ function PostFeed() {
             cookies.set("token", newToken, { path: "/" }); // Set new token in cookies
             localStorage.setItem("token", newToken); // Set new token in localstorage
         } catch (error) {
+            console.log(
+                "🚀 ~ file: page.tsx:63 ~ reFreshToken ~ error:",
+                error
+            );
+
             toast.warn(
                 "Error refreshing token, maybe you are gonna to be logged out"
             );
@@ -86,6 +91,7 @@ function PostFeed() {
             setPostsRemaining(() => PostData.remainingPosts); // Set remaining posts state
             await getUserInfo(token); // Get user info
         } catch (error) {
+            console.log("🚀 ~ file: page.tsx:94 ~ getPosts ~ error:", error);
             toast.error("Error getting posts, try login again");
             router.push("/login");
         }
@@ -100,60 +106,56 @@ function PostFeed() {
     }, []);
 
     return (
-        <Layout>
-            <div className="min-h-screen pb-5 text-white bg-black min-w-screen sm:flex sm:flex-col sm:items-center">
-                {userPost ? (
-                    <div className="flex flex-col items-center mx-1 border-2 border-white rounded-xl sm:w-1/3">
-                        <div className="flex flex-row gap-3 p-3">
-                            <img
-                                src={userPost.user.profilePicture.url}
-                                className="rounded-full"
-                                width={userPost.user.profilePicture.width / 10}
-                                height={
-                                    userPost.user.profilePicture.height / 10
-                                }
-                            />
-                            <h1 className="text-2xl font-extrabold sm:text-4xl">
-                                @{userPost.user.username}
-                            </h1>
-                        </div>
-                        <div className="flex flex-row overflow-hidden min-w-[300px] w-[375px] carousel m-auto sm:m-0">
-                            {userPost.posts.map((post: Post, index: number) => {
-                                return (
-                                    <PostElement
-                                        post={post}
-                                        key={post.id}
-                                        username={userPost.user.username}
-                                        order={index}
-                                        authorName={userPost.user.username}
-                                        totalPosts={userPost.posts.length}
-                                    />
-                                );
-                            })}
-                        </div>
-                        <ul className="flex flex-col p-1 m-1 border border-white rounded-xl">
-                            <li>Posts made: {userPost.posts.length}</li>
-                            <li>Remaining posts: {postsRemaining}</li>
-                        </ul>
+        <div className="min-h-screen pb-5 text-white bg-black min-w-screen sm:flex sm:flex-col sm:items-center">
+            {userPost ? (
+                <div className="flex flex-col items-center mx-1 border-2 border-white rounded-xl sm:w-1/3">
+                    <div className="flex flex-row gap-3 p-3">
+                        <img
+                            src={userPost.user.profilePicture.url}
+                            className="rounded-full"
+                            width={userPost.user.profilePicture.width / 10}
+                            height={userPost.user.profilePicture.height / 10}
+                        />
+                        <h1 className="text-2xl font-extrabold sm:text-4xl">
+                            @{userPost.user.username}
+                        </h1>
                     </div>
-                ) : (
-                    <h1 className="text-center">
-                        You don&apos;t have any posts yet
-                    </h1>
-                )}
-                <div className="h-full mt-3 sm:flex sm:flex-row sm:flex-wrap sm:justify-center">
-                    {posts.map((Fpost: FriendsPost) => {
-                        return (
-                            <FriendPosts
-                                FriendPost={Fpost}
-                                username={userInfo?.username || ""}
-                                key={Fpost.user.id}
-                            />
-                        );
-                    })}
+                    <div className="flex flex-row overflow-hidden min-w-[300px] w-[375px] carousel m-auto sm:m-0">
+                        {userPost.posts.map((post: Post, index: number) => {
+                            return (
+                                <PostElement
+                                    post={post}
+                                    key={post.id}
+                                    username={userPost.user.username}
+                                    order={index}
+                                    authorName={userPost.user.username}
+                                    totalPosts={userPost.posts.length}
+                                />
+                            );
+                        })}
+                    </div>
+                    <ul className="flex flex-col p-1 m-1 border border-white rounded-xl">
+                        <li>Posts made: {userPost.posts.length}</li>
+                        <li>Remaining posts: {postsRemaining}</li>
+                    </ul>
                 </div>
+            ) : (
+                <h1 className="text-center">
+                    You don&apos;t have any posts yet
+                </h1>
+            )}
+            <div className="h-full mt-3 sm:flex sm:flex-row sm:flex-wrap sm:justify-center">
+                {posts.map((Fpost: FriendsPost) => {
+                    return (
+                        <FriendPosts
+                            FriendPost={Fpost}
+                            username={userInfo?.username || ""}
+                            key={Fpost.user.id}
+                        />
+                    );
+                })}
             </div>
-        </Layout>
+        </div>
     );
 }
 

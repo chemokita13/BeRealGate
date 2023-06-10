@@ -1,10 +1,11 @@
+"use client";
 import RootLayout from "@/app/layout";
 import { useState } from "react";
 import axios from "@/constants/axiosInstance"; /// NOT AXIOS MODULE; AXIOS INSTANCE FROM CONSTANTS
 import { ApiResponse } from "@/types/types";
-import { useRouter } from "next/router";
 import Cookie from "cookie-universal";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 const Flip = require("react-reveal/Flip"); // Import doesnt working
 
 function Login() {
@@ -111,76 +112,74 @@ function Login() {
     };
 
     return (
-        <RootLayout>
-            <main className="flex flex-col items-center w-screen h-screen overflow-x-hidden text-white">
-                <h1 className="m-5 text-5xl">Login Form</h1>
-                <div className="flex flex-col items-center">
-                    <Flip top>
-                        <form
-                            className={`flex flex-col items-center p-10 border border-white rounded-lg w-3/4 sm:w-auto ${
-                                sentCode && "hidden"
-                            }`}
-                            onSubmit={(e) =>
-                                toast.promise(postPhoneSubmit(e), {
-                                    pending: "Sending code",
-                                    error: "Error sending code",
-                                })
-                            }
+        <div className="flex flex-col items-center w-screen h-screen overflow-x-hidden text-white">
+            <h1 className="m-5 text-5xl">Login Form</h1>
+            <div className="flex flex-col items-center">
+                <Flip top>
+                    <form
+                        className={`flex flex-col items-center p-10 border border-white rounded-lg w-3/4 sm:w-auto ${
+                            sentCode && "hidden"
+                        }`}
+                        onSubmit={(e) =>
+                            toast.promise(postPhoneSubmit(e), {
+                                pending: "Sending code",
+                                error: "Error sending code",
+                            })
+                        }
+                    >
+                        <span className="m-1">
+                            Enter your phone number to get an otp code
+                        </span>
+                        <input
+                            className="px-5 py-1 text-black rounded-md placeholder:text-center"
+                            type="text"
+                            name="phoneNumber"
+                            id="phoneNumber"
+                            placeholder="+00111223344"
+                            onChange={(e) => handlePhoneChange(e)}
+                        />
+                        <button
+                            type="submit"
+                            className="px-2 py-1 m-2 border border-green-500 rounded-lg"
                         >
-                            <span className="m-1">
-                                Enter your phone number to get an otp code
-                            </span>
-                            <input
-                                className="px-5 py-1 text-black rounded-md placeholder:text-center"
-                                type="text"
-                                name="phoneNumber"
-                                id="phoneNumber"
-                                placeholder="+00111223344"
-                                onChange={(e) => handlePhoneChange(e)}
-                            />
-                            <button
-                                type="submit"
-                                className="px-2 py-1 m-2 border border-green-500 rounded-lg"
-                            >
-                                Submit
-                            </button>
-                        </form>
-                    </Flip>
-                    <Flip bottom>
-                        <form
-                            className={`flex flex-col items-center p-10 border-dashed border border-white rounded-lg w-3/4 sm:w-auto ${
-                                !sentCode && "hidden"
-                            }`}
-                            onSubmit={(e) => postOtpSubmit(e)}
+                            Submit
+                        </button>
+                    </form>
+                </Flip>
+                <Flip bottom>
+                    <form
+                        className={`flex flex-col items-center p-10 border-dashed border border-white rounded-lg w-3/4 sm:w-auto ${
+                            !sentCode && "hidden"
+                        }`}
+                        onSubmit={(e) => postOtpSubmit(e)}
+                    >
+                        <span className="m-1">
+                            Enter the otp code sent to your phone number
+                        </span>
+                        <input
+                            className="px-5 py-1 text-black rounded-md placeholder:text-center"
+                            type="text"
+                            name="otpCode"
+                            id="otpCode"
+                            placeholder="0123456"
+                            onChange={(e) => handleOtpChange(e)}
+                        />
+                        <button
+                            type="submit"
+                            className="px-2 py-1 m-2 border border-green-500 rounded-lg"
                         >
-                            <span className="m-1">
-                                Enter the otp code sent to your phone number
-                            </span>
-                            <input
-                                className="px-5 py-1 text-black rounded-md placeholder:text-center"
-                                type="text"
-                                name="otpCode"
-                                id="otpCode"
-                                placeholder="0123456"
-                                onChange={(e) => handleOtpChange(e)}
-                            />
-                            <button
-                                type="submit"
-                                className="px-2 py-1 m-2 border border-green-500 rounded-lg"
-                            >
-                                Submit
-                            </button>
-                            <span
-                                onClick={() => resendCode()}
-                                className="underline cursor-pointer"
-                            >
-                                Resend code?
-                            </span>
-                        </form>
-                    </Flip>
-                </div>
-            </main>
-        </RootLayout>
+                            Submit
+                        </button>
+                        <span
+                            onClick={() => resendCode()}
+                            className="underline cursor-pointer"
+                        >
+                            Resend code?
+                        </span>
+                    </form>
+                </Flip>
+            </div>
+        </div>
     );
 }
 
