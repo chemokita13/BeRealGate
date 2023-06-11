@@ -140,7 +140,7 @@ function PostFeed() {
                     </ul>
                 </div>
             ) : (
-                <h1 className="text-center">
+                <h1 className="text-center cursor-default">
                     You don&apos;t have any posts yet
                 </h1>
             )}
