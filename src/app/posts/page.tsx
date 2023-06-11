@@ -40,8 +40,8 @@ function PostFeed() {
             const userInfoRes: UserInfo = data.data; // Get user info
             setUserInfo(userInfoRes); // Set user info state
         } catch (error) {
+            console.log("🚀 ~ file: page.tsx:43 ~ getUserInfo ~ error:", error);
             toast.warn("Error getting user info, something is going wrong");
-            console.error(error);
         }
     };
 
@@ -64,7 +64,6 @@ function PostFeed() {
                 "🚀 ~ file: page.tsx:63 ~ reFreshToken ~ error:",
                 error
             );
-
             toast.warn("Error refreshing token, you may be logged out soon");
         }
     };
