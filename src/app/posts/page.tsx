@@ -53,7 +53,7 @@ function PostFeed() {
                 await axiosInstance.post("login/refresh", { token: oldToken });
             if (status !== 201) {
                 toast.warn(
-                    "Error refreshing token, maybe you are gonna to be logged out"
+                    "Error refreshing token, you may be logged out soon"
                 );
             }
             const newToken = data.data.token; // Get new token
@@ -65,9 +65,7 @@ function PostFeed() {
                 error
             );
 
-            toast.warn(
-                "Error refreshing token, maybe you are gonna to be logged out"
-            );
+            toast.warn("Error refreshing token, you may be logged out soon");
         }
     };
 
