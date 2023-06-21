@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 function Footer() {
@@ -13,12 +14,13 @@ function Footer() {
                 className="flex flex-col items-center p-1 m-5 transition-all duration-200 border border-white border-double hover:scale-110"
                 href="https://github.com/chemokita13/BeRealGate"
             >
-                <img
-                    src="https://logodix.com/logo/952890.png"
+                <Image
+                    src={"https://logodix.com/logo/952890.png"}
                     alt="GitHub source code"
                     width={50}
                     height={50}
                 />
+
                 <span>View source code</span>
             </a>
         </footer>
