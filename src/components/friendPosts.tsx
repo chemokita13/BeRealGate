@@ -1,6 +1,7 @@
 import { FriendsPost, Post } from "@/types/types";
 import React from "react";
 import PostElement from "./post";
+import Image from "next/image";
 
 function FriendPosts({
     FriendPost,
@@ -13,11 +14,12 @@ function FriendPosts({
         <div className="m-1 border border-white sm:flex sm:flex-col sm:w-[30%] sm:items-center rounded-md">
             {FriendPost.user.profilePicture ? (
                 <div className="flex flex-row items-center gap-3 p-3">
-                    <img
+                    <Image
                         src={FriendPost.user.profilePicture.url}
                         className="rounded-full"
                         width={50}
                         height={50}
+                        alt="Profile picture"
                     />
                     <h1 className="text-xl font-bold text-center underline sm:font-bold before:content-['@'] before:font-extrabold">
                         {FriendPost.user.username}

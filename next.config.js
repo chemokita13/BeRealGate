@@ -9,6 +9,10 @@ const nextConfig = {
                 protocol: "https",
                 hostname: "logodix.com",
             },
+            {
+                protocol: "https",
+                hostname: "cdn.bereal.network",
+            },
         ],
     },
 };
