@@ -14,6 +14,8 @@ import { useEffect, useState } from "react";
 import Cookie from "cookie-universal";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { get } from "http";
+import Image from "next/image";
 
 function PostFeed() {
     const cookies = Cookie(); // Cookies instance
@@ -107,11 +109,12 @@ function PostFeed() {
             {userPost ? (
                 <div className="flex flex-col items-center mx-1 border-2 border-white rounded-xl sm:w-1/3">
                     <div className="flex flex-row gap-3 p-3">
-                        <img
+                        <Image
                             src={userPost.user.profilePicture.url}
                             className="rounded-full"
                             width={userPost.user.profilePicture.width / 10}
                             height={userPost.user.profilePicture.height / 10}
+                            alt="profile picture"
                         />
                         <h1 className="text-2xl font-extrabold sm:text-4xl">
                             @{userPost.user.username}
