@@ -1,5 +1,4 @@
 "use client";
-import RootLayout from "@/app/layout";
 import { useState } from "react";
 import axios from "@/constants/axiosInstance"; /// NOT AXIOS MODULE; AXIOS INSTANCE FROM CONSTANTS
 import { ApiResponse } from "@/types/types";
