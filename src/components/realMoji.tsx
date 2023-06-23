@@ -1,5 +1,4 @@
 import { RealMojisEntity } from "@/types/types";
-import Image from "next/image";
 import React from "react";
 
 function RealMoji({ realMoji }: { realMoji: RealMojisEntity }) {
@@ -13,7 +12,7 @@ function RealMoji({ realMoji }: { realMoji: RealMojisEntity }) {
     return (
         <div key={realMoji.id} className="flex flex-col items-center m-2">
             <div className="relative w-[50px] aspect-square">
-                <Image
+                <img
                     src={realMoji.media.url}
                     width={50}
                     height={50}
