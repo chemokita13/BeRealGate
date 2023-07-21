@@ -5,6 +5,7 @@ import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import { Analytics } from "@vercel/analytics/react";
 import "react-toastify/dist/ReactToastify.css";
+import Ganal from "@/components/ganal";
 export const metadata: Metadata = {
     title: "BeReal Gate",
     description: "A new way to BeReal",
@@ -20,6 +21,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <html>
             <body>
                 <Analytics />
+                <Ganal />
                 <Nav />
                 <ToastContainer
                     theme="colored"
