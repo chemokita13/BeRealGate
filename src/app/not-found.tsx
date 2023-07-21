@@ -1,4 +1,3 @@
-import Layout from "@/app/layout";
 import Link from "next/link";
 import React from "react";
 
