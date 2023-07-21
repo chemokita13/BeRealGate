@@ -1,9 +1,11 @@
+"use client";
 import Script from "next/script";
 import React from "react";
-
+import { Analytics } from "@vercel/analytics/react";
 function Ganal() {
     return (
         <>
+            <Analytics />
             <Script
                 async
                 src="https://www.googletagmanager.com/gtag/js?id=G-63XQFD1L7Z"
