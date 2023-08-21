@@ -8,6 +8,7 @@
 
 main {
     background: #000;
+    overflow-y: scroll;
 }
 
 .carousel {
