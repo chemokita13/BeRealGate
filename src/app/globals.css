@@ -8,7 +8,6 @@
 
 main {
     background: #000;
-    overflow-y: scroll;
 }
 
 .carousel {
@@ -28,6 +27,9 @@ main {
     #main-index {
         background-color: black;
         height: 100vh;
+    }
+    main {
+        overflow-y: scroll;
     }
 }
 
