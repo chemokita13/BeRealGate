@@ -1,5 +1,5 @@
 import axiosInstance from "@/constants/axiosInstance";
-import { ApiResponse, CommentsEntity, Post } from "@/types/types";
+import { ApiResponse, CommentsEntity, Post, Post_FoF } from "@/types/types";
 import React, { useState } from "react";
 import Cookie from "cookie-universal";
 import { toast } from "react-toastify";
@@ -9,7 +9,7 @@ function CommentsBox({
     postInstance,
     username,
 }: {
-    setPostInstance: React.Dispatch<React.SetStateAction<Post>>;
+    setPostInstance: React.Dispatch<React.SetStateAction<Post | Post_FoF>>;
     postInstance: Post;
     username: string;
 }) {

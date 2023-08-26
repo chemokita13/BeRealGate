@@ -1,51 +1,48 @@
-import { FriendsPost, Post } from "@/types/types";
+/* eslint-disable @next/next/no-img-element */
+import { Post_FoF } from "@/types/types";
 import React from "react";
 import PostElement from "./post";
 
-function FriendPosts({
-    FriendPost,
+function FriendOfFriendPosts({
+    FriendOfFriend,
     username,
 }: {
-    FriendPost: FriendsPost;
+    FriendOfFriend: Post_FoF;
     username: string;
 }) {
     return (
         <div className="m-1 border border-white sm:flex sm:flex-col sm:w-[30%] sm:items-center rounded-md">
-            {FriendPost.user.profilePicture ? (
+            {FriendOfFriend.user.profilePicture ? (
                 <div className="flex flex-row items-center gap-3 p-3">
                     <img
-                        src={FriendPost.user.profilePicture.url}
+                        src={FriendOfFriend.user.profilePicture.url}
                         className="rounded-full"
                         width={50}
                         height={50}
                         alt="Profile picture"
                     />
                     <h1 className="text-xl font-bold text-center underline sm:font-bold before:content-['@'] before:font-extrabold">
-                        {FriendPost.user.username}
+                        {FriendOfFriend.user.username}
                     </h1>
                 </div>
             ) : (
                 <h1 className="text-xl p-3 font-bold text-center underline sm:font-bold before:content-['@'] before:font-extrabold">
-                    {FriendPost.user.username}
+                    {FriendOfFriend.user.username}
                 </h1>
             )}
             <div className="flex flex-row overflow-hidden min-w-[300px] w-[375px] carousel m-auto sm:m-0">
-                {FriendPost.posts.map((post: Post, index: number) => {
-                    return (
-                        <PostElement
-                            post={post}
-                            key={post.id}
-                            username={username}
-                            order={index}
-                            authorName={FriendPost.user.username}
-                            totalPosts={FriendPost.posts.length}
-                            realMojis={post.realMojis}
-                        />
-                    );
-                })}
+                <PostElement
+                    post={FriendOfFriend}
+                    key={FriendOfFriend.id}
+                    username={username}
+                    order={0}
+                    authorName={FriendOfFriend.user.username}
+                    totalPosts={1}
+                    realMojis={FriendOfFriend.realmojis.sample}
+                />
             </div>
         </div>
     );
 }
 
-export default FriendPosts;
+export default FriendOfFriendPosts;

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import FriendPosts from "@/components/friendPosts";
 import PostElement from "@/components/post";
@@ -14,6 +15,7 @@ import { useEffect, useState } from "react";
 import Cookie from "cookie-universal";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 function PostFeed() {
     const cookies = Cookie(); // Cookies instance
@@ -103,7 +105,7 @@ function PostFeed() {
     }, []);
 
     return (
-        <div className="min-h-screen pb-5 text-white bg-black min-w-screen sm:flex sm:flex-col sm:items-center">
+        <div className="flex flex-col min-h-screen gap-5 pb-5 text-white bg-black min-w-screen sm:items-center ">
             {userPost ? (
                 <div className="flex flex-col items-center mx-1 border-2 border-white rounded-xl sm:w-1/3">
                     <div className="flex flex-row gap-3 p-3">
@@ -128,6 +130,7 @@ function PostFeed() {
                                     order={index}
                                     authorName={userPost.user.username}
                                     totalPosts={userPost.posts.length}
+                                    realMojis={post.realMojis}
                                 />
                             );
                         })}
@@ -142,6 +145,12 @@ function PostFeed() {
                     You don&apos;t have any posts yet
                 </h1>
             )}
+            <Link
+                className="py-3 m-3 text-xl text-center underline transition-all duration-150 border border-white rounded-lg sm:w-1/3 hover:underline hover:scale-110 hover:text-2xl"
+                href={"/posts/friends-of-friends"}
+            >
+                See Friends-of-friends posts
+            </Link>
             <div className="h-full mt-3 sm:flex sm:flex-row sm:flex-wrap sm:justify-center">
                 {posts.map((Fpost: FriendsPost) => {
                     return (

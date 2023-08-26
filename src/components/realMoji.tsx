@@ -8,6 +8,10 @@ function RealMoji({ realMoji }: { realMoji: RealMojisEntity }) {
         happy: "😀",
         surprised: "😮",
         instant: "⚡",
+        "😍": "😍",
+        "👍": "👍",
+        "😮": "😮",
+        "⚡": "⚡",
     };
     return (
         <div key={realMoji.id} className="flex flex-col items-center m-2">
@@ -20,7 +24,7 @@ function RealMoji({ realMoji }: { realMoji: RealMojisEntity }) {
                     alt="realMoji"
                 />
                 <span className="absolute bottom-0 right-[-10px]">
-                    {textToMogi[realMoji.type]}
+                    {realMoji.emoji || textToMogi[realMoji.type]}
                 </span>
             </div>
             <p className="text-xs">@{realMoji.user.username}</p>

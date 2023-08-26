@@ -49,6 +49,7 @@ export interface ProfilePictureOrMediaOrPrimaryOrSecondary1 {
     height: number;
 }
 export interface Post {
+    type: "Post";
     id: string;
     primary: ProfilePictureOrMediaOrPrimaryOrSecondary;
     secondary: ProfilePictureOrMediaOrPrimaryOrSecondary;
@@ -65,6 +66,27 @@ export interface Post {
     updatedAt: string;
     music?: Music | null;
     screenshots?: sc[] | null;
+}
+
+export interface Post_FoF {
+    type: "Post_FoF";
+    id: string;
+    primary: ProfilePictureOrMediaOrPrimaryOrSecondary;
+    secondary: ProfilePictureOrMediaOrPrimaryOrSecondary;
+    location: Location | null;
+    caption: string | null;
+    retakeCounter: number;
+    lateInSeconds: number;
+    isLate: boolean;
+    isMain: boolean;
+    takenAt: string;
+    realmojis: { sample: RealMojisEntity[] };
+    comments: CommentsEntity[];
+    creationDate: string;
+    updatedAt: string;
+    music?: Music | null;
+    screenshots?: sc[] | null;
+    user: User;
 }
 
 export interface sc {

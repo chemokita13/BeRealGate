@@ -1,4 +1,4 @@
-import { Post, RealMojisEntity, sc } from "@/types/types";
+import { Post, Post_FoF, RealMojisEntity, sc } from "@/types/types";
 import { useState } from "react";
 import CommentsBox from "./commentsBox";
 import RealMoji from "./realMoji";
@@ -10,15 +10,18 @@ function PostElement({
     order,
     authorName,
     totalPosts,
+    realMojis,
 }: {
-    post: Post;
+    post: Post | Post_FoF;
     username: string;
     order: number;
     authorName: string;
     totalPosts: number;
+    realMojis: RealMojisEntity[];
 }) {
-    const [postInstance, setPostInstance] = useState<Post>(post); // post state for updating it
+    const [postInstance, setPostInstance] = useState<Post | Post_FoF>(post); // post state for updating it
     const [focusFirst, setFocusFirst] = useState<boolean>(true); // focusFirst state for focusing first img
+
     return (
         <div
             className="flex flex-col items-center justify-start w-screen h-full text-center sm:w-full"
@@ -58,15 +61,17 @@ function PostElement({
             <p>{postInstance.caption}</p>
             {postInstance.music && <Music music={postInstance.music} />}
             <div className="flex flex-row flex-wrap justify-center">
-                {postInstance.realMojis.map((realMoji: RealMojisEntity) => {
+                {realMojis.map((realMoji: RealMojisEntity) => {
                     return <RealMoji realMoji={realMoji} key={realMoji.id} />;
                 })}
             </div>
-            <CommentsBox
-                postInstance={postInstance}
-                setPostInstance={setPostInstance}
-                username={username}
-            />
+            {postInstance.type === "Post" && (
+                <CommentsBox
+                    postInstance={postInstance}
+                    setPostInstance={setPostInstance}
+                    username={username}
+                />
+            )}
             {/** Do not try to understand that, hahahah */}
             {totalPosts > 1 && (
                 <a
