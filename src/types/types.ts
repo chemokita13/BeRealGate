@@ -86,7 +86,23 @@ export interface Post_FoF {
     updatedAt: string;
     music?: Music | null;
     screenshots?: sc[] | null;
-    user: User;
+    user: UserFoF;
+}
+
+export interface UserFoF {
+    id: string;
+    username: string;
+    profilePicture: ProfilePictureOrMediaOrPrimaryOrSecondary;
+    relationship: {
+        commonFriends: relationship[];
+    };
+}
+
+export interface relationship {
+    id: string;
+    username: string;
+    fullname: string;
+    profilePicture: ProfilePictureOrMediaOrPrimaryOrSecondary;
 }
 
 export interface sc {
