@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import { Post_FoF } from "@/types/types";
-import React from "react";
 import PostElement from "./post";
 
 function FriendOfFriendPosts({

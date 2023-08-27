@@ -1,5 +1,4 @@
 import { FriendsPost, Post } from "@/types/types";
-import React from "react";
 import PostElement from "./post";
 
 function FriendPosts({

@@ -1,6 +1,5 @@
 "use client";
 import Script from "next/script";
-import React from "react";
 import { Analytics } from "@vercel/analytics/react";
 function Ganal() {
     return (

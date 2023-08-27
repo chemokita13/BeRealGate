@@ -1,5 +1,4 @@
 import { RealMojisEntity } from "@/types/types";
-import React from "react";
 
 function RealMoji({ realMoji }: { realMoji: RealMojisEntity }) {
     const textToMogi = {

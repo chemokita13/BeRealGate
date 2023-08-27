@@ -1,5 +1,4 @@
 import { Music } from "@/types/types";
-import React from "react";
 
 function Music({ music }: { music: Music }) {
     return (

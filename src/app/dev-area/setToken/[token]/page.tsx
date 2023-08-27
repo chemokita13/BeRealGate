@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Cookie from "cookie-universal";
 import { useRouter } from "next/navigation";
 
