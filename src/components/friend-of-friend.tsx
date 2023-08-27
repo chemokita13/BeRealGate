@@ -26,7 +26,7 @@ function FriendOfFriendPosts({
                             {FriendOfFriend.user.username}
                         </h1>
                     </div>
-                    <h2 className="text-sm text-center text-gray-400">
+                    <h2 className="p-2 text-sm text-center text-gray-400">
                         Friend of:{" "}
                         {FriendOfFriend.user.relationship.commonFriends.map(
                             (friend) => {
@@ -40,7 +40,7 @@ function FriendOfFriendPosts({
                     <h1 className="text-xl p-3 font-bold text-center underline sm:font-bold before:content-['@'] before:font-extrabold">
                         {FriendOfFriend.user.username}
                     </h1>
-                    <h2 className="text-sm text-center text-gray-400">
+                    <h2 className="p-2 text-sm text-center text-gray-400">
                         Friend of:{" "}
                         {FriendOfFriend.user.relationship.commonFriends.map(
                             (friend) => {
