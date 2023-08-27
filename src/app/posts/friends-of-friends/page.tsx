@@ -46,12 +46,8 @@ function FriendsOfFriends() {
                     },
                 }
             );
-            const PostData: { data: Post_FoF[]; next: string } = data.data.data; // Get post data
-            console.log(
-                "🚀 ~ file: page.tsx:58 ~ getPosts ~ PostData:",
-                PostData
-            );
-            setPosts(PostData.data); // Set posts state
+            const PostData: Post_FoF[] = data.data; // Get post data
+            setPosts(PostData); // Set posts state
         } catch (error) {
             console.log("🚀 ~ file: page.tsx:94 ~ getPosts ~ error:", error);
             toast.error("Error getting posts, try login again");
