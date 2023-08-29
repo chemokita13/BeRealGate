@@ -5,12 +5,12 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Cookie from "cookie-universal";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
 function NewPost() {
     const router = useRouter();
     useEffect(() => {
-        toast.warn("Actually not working, but it will be soon");
-        router.push("/posts");
+        toast.warn("This page is in alpha version and may not work properly");
     }, []);
     const cookies = Cookie();
 
@@ -31,25 +31,34 @@ function NewPost() {
                 ...postData,
                 location: [location.lat, location.lon],
             });
-        //?console.log(postData);
         //* Create the form that will be sent
         const FormToSend = new FormData();
         // Add the data to the form, (img1, img2 and settings: postData)
-        FormToSend.append(
-            "postData",
-            '{resize: true,visibility: "friends",caption: "solo estoy provando cosas, ignoradlo porfis <3",}'
-        );
+        FormToSend.append("visibility", postData.visibility || "friends");
+        postData.caption && FormToSend.append("caption", postData.caption);
+        postData.location &&
+            FormToSend.append(
+                "location",
+                [location.lat, location.lon].toString()
+            );
         img1 && FormToSend.append("img1", new Blob([img1]));
         img2 && FormToSend.append("img2", new Blob([img2]));
-        const response = await axiosInstance.post("/post/new", FormToSend, {
-            headers: {
-                token: cookies.get("token"),
-            },
-        });
-        console.log(response);
+        try {
+            const response = await axiosInstance.post("/post/new", FormToSend, {
+                headers: {
+                    token: cookies.get("token"),
+                },
+            });
+            console.log(response);
+            toast.success("Post created successfully");
+        } catch (error) {
+            console.log(error);
+            toast.error("Error creating post");
+        }
     };
     const handleImg1 = (e: React.FormEvent<HTMLInputElement>) => {
         const file = e.currentTarget.files;
+
         const reader = new FileReader();
         if (file) {
             console.log("🚀 ~ file: new.tsx:28 ~ handleImg ~ file:", file);
@@ -79,45 +88,120 @@ function NewPost() {
         setPostData({ ...postData, [name]: value });
     };
     return (
-        <div>
-            <form onSubmit={(e) => handleFormSubmit(e)}>
+        <div className="flex flex-col items-center h-screen bg-black">
+            <form
+                onSubmit={(e) => handleFormSubmit(e)}
+                className="flex flex-col w-screen p-1 border-4 border-white sm:p-5 sm:w-1/4 rounded-xl h-fit"
+            >
+                <div className="flex flex-col justify-center">
+                    <label className="block mb-2 text-sm font-medium text-center text-gray-900 dark:text-white">
+                        Upload first image
+                    </label>
+                    <input
+                        className="w-full p-1 text-sm text-gray-500 border border-white rounded-lg cursor-pointer focus:outline-none"
+                        id="file_input"
+                        type="file"
+                        name="img1"
+                        onChange={(e) => handleImg1(e)}
+                    />
+                </div>
+                <div className="flex flex-col justify-center">
+                    <label className="block mb-2 text-sm font-medium text-center text-gray-900 dark:text-white">
+                        Upload second image
+                    </label>
+                    <input
+                        className="w-full p-1 text-sm text-gray-500 border border-white rounded-lg cursor-pointer focus:outline-none"
+                        id="file_input"
+                        type="file"
+                        name="img2"
+                        onChange={(e) => handleImg2(e)}
+                    />
+                </div>
                 <input
                     type="text"
                     name="caption"
                     id="title"
-                    placeholder="Caption: "
+                    placeholder="Caption"
                     onChange={(e) => handleInputChange(e)}
+                    className="p-1 mt-3 mb-1 rounded-lg placeholder:text-center"
                 />
-                <input
-                    type="file"
-                    name="img1"
-                    id="image"
-                    onChange={(e) => handleImg1(e)}
-                    accept=".jpg, .jpeg, .png, .webp"
-                />
-                <input
-                    type="file"
-                    name="img2"
-                    id="image"
-                    onChange={(e) => handleImg2(e)}
-                    accept=".jpg, .jpeg, .png, .webp"
-                />
-                <input
-                    type="text"
-                    name="lat"
-                    id="lat"
-                    placeholder="Latitude: "
-                    onChange={(e) => handleInputChange(e)}
-                />
-                <input
-                    type="text"
-                    name="lon"
-                    id="lon"
-                    placeholder="Longitude: "
-                    onChange={(e) => handleInputChange(e)}
-                />
-                <button type="submit">Post</button>
+                <div className="flex flex-col p-3 my-3 text-center text-white border border-white rounded-xl ">
+                    <label className="my-1">Post coordinates</label>
+                    <div className="flex flex-row justify-center gap-5 ">
+                        <input
+                            type="text"
+                            name="lat"
+                            id="lat"
+                            placeholder="Latitude"
+                            onChange={(e) => handleInputChange(e)}
+                            className="p-1 rounded-lg placeholder:text-center"
+                        />
+                        <input
+                            type="text"
+                            name="lon"
+                            id="lon"
+                            placeholder="Longitude"
+                            onChange={(e) => handleInputChange(e)}
+                            className="p-1 rounded-lg placeholder:text-center"
+                        />
+                    </div>
+                </div>
+
+                <div className="flex flex-col p-3 my-3 text-center text-white border border-white rounded-xl ">
+                    <label className="my-1">Post visibility</label>
+                    <div className="flex flex-col gap-5">
+                        <div className="flex flex-row gap-1 ">
+                            <input
+                                type="radio"
+                                name="visibility"
+                                value="friends"
+                                onChange={(e) => handleInputChange(e)}
+                                className="p-1 rounded-lg placeholder:text-center"
+                            />
+                            <span className="text-white">
+                                Friends (default)
+                            </span>
+                        </div>
+                        <div className="flex flex-row gap-1 ">
+                            <input
+                                type="radio"
+                                name="visibility"
+                                id="public"
+                                value="friends-of-friends"
+                                onChange={(e) => handleInputChange(e)}
+                                className="p-1 rounded-lg placeholder:text-center"
+                            />
+                            <span className="text-white">
+                                Friends of friends
+                            </span>
+                        </div>
+                        <div className="flex flex-row gap-1 ">
+                            <input
+                                type="radio"
+                                name="visibility"
+                                id="public"
+                                value="public"
+                                onChange={(e) => handleInputChange(e)}
+                                className="p-1 rounded-lg placeholder:text-center"
+                            />
+                            <span className="text-white">Public</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button
+                    type="submit"
+                    className="font-bold text-white transition-all duration-100 bg-blue-500 border-2 border-white rounded-xl hover:scale-105 hover:underline"
+                >
+                    Post
+                </button>
             </form>
+            <Link
+                href="/posts"
+                className="p-2 m-5 text-xl font-bold transition-all duration-100 bg-white rounded-lg sm:p-5 hover:scale-105 hover:underline"
+            >
+                Go back to posts
+            </Link>
         </div>
     );
 }
