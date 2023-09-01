@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 import Ganal from "@/components/ganal";
+import React from "react";
 export const metadata: Metadata = {
     title: "BeReal Gate",
     description: "A new way to BeReal",
