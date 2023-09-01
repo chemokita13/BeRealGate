@@ -66,9 +66,10 @@ function FriendsOfFriends() {
         <div className="flex flex-col min-h-screen pb-5 text-white bg-black min-w-screen sm:items-center">
             <div className="h-full sm:flex sm:flex-row sm:flex-wrap sm:justify-center">
                 {posts?.map((Fpost: Post_FoF, index: number) => {
+                    const postToSend: Post_FoF = { ...Fpost, type: "Post_FoF" };
                     return (
                         <FriendOfFriendPosts
-                            FriendOfFriend={Fpost}
+                            FriendOfFriend={postToSend}
                             key={index}
                             username={"no needed but required"}
                         />

@@ -30,9 +30,10 @@ function FriendPosts({
             )}
             <div className="flex flex-row overflow-hidden min-w-[300px] w-[375px] carousel m-auto sm:m-0">
                 {FriendPost.posts.map((post: Post, index: number) => {
+                    const postToSend: Post = { ...post, type: "Post" };
                     return (
                         <PostElement
-                            post={post}
+                            post={postToSend}
                             key={post.id}
                             username={username}
                             order={index}

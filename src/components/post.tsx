@@ -1,5 +1,5 @@
 import { Post, Post_FoF, RealMojisEntity, sc } from "@/types/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CommentsBox from "./commentsBox";
 import RealMoji from "./realMoji";
 import Music from "./music";
@@ -21,6 +21,9 @@ function PostElement({
 }) {
     const [postInstance, setPostInstance] = useState<Post | Post_FoF>(post); // post state for updating it
     const [focusFirst, setFocusFirst] = useState<boolean>(true); // focusFirst state for focusing first img
+    useEffect(() => {
+        console.log(postInstance.type);
+    });
 
     return (
         <div
