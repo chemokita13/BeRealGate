@@ -66,7 +66,7 @@ function Login() {
                 return;
             }
             const { status, data } = await axios.post("login/verify", {
-                otpSesion: otpSessionToPost,
+                otpSession: otpSessionToPost,
                 code: otp,
             });
 
