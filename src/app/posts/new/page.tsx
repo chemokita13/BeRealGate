@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import Link from "next/link";
 
 function NewPost() {
-    const router = useRouter();
+    //?const router = useRouter();
     useEffect(() => {
         toast.warn("This page is in alpha version and may not work properly");
     }, []);
@@ -41,15 +41,59 @@ function NewPost() {
                 "location",
                 [location.lat, location.lon].toString()
             );
-        img1 && FormToSend.append("img1", new Blob([img1]));
-        img2 && FormToSend.append("img2", new Blob([img2]));
         try {
-            const response = await axiosInstance.post("/post/new", FormToSend, {
+            const token: string =
+                cookies.get("token") || localStorage.getItem("token");
+            //* First request
+            const response = await axiosInstance.get("/post/upload/getData", {
                 headers: {
-                    token: cookies.get("token"),
+                    token: token,
                 },
             });
-            console.log(response);
+            // Get the tokens to send
+            const { postDataToken, secondPhotoToken, firstPhotoToken } =
+                response.data.data;
+            //* Second request (post photos)
+            const formWithPhoto1 = new FormData();
+            img1 && formWithPhoto1.append("img", new Blob([img1]));
+            formWithPhoto1.append("tokenData", firstPhotoToken);
+            const responsePhoto1 = await axiosInstance.put(
+                "/post/upload/photo",
+                formWithPhoto1,
+                {
+                    headers: {
+                        token: token,
+                    },
+                }
+            );
+            const formWithPhoto2 = new FormData();
+            img2 && formWithPhoto2.append("img", new Blob([img2]));
+            formWithPhoto2.append("tokenData", secondPhotoToken);
+            const responsePhoto2 = await axiosInstance.put(
+                "/post/upload/photo",
+                formWithPhoto2,
+                {
+                    headers: {
+                        token: token,
+                    },
+                }
+            );
+            //* Third request, post options
+            //?const postOptions: PostData = postData
+            const postDataToSend: { tokenData: string; postData: PostData } = {
+                tokenData: postDataToken,
+                postData: postData,
+            };
+            const responseOptions = await axiosInstance.post(
+                "/post/upload/data",
+                postDataToSend,
+                {
+                    headers: {
+                        token: token,
+                    },
+                }
+            );
+            console.log(responseOptions.statusText, responsePhoto1.statusText);
             toast.success("Post created successfully");
         } catch (error) {
             console.log(error);
