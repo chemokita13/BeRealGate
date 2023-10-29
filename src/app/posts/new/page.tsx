@@ -175,7 +175,7 @@ function NewPost() {
                             id="lat"
                             placeholder="Latitude"
                             onChange={(e) => handleInputChange(e)}
-                            className="p-1 rounded-lg placeholder:text-center"
+                            className="p-1 rounded-lg placeholder:text-center text-black"
                         />
                         <input
                             type="text"
@@ -183,7 +183,7 @@ function NewPost() {
                             id="lon"
                             placeholder="Longitude"
                             onChange={(e) => handleInputChange(e)}
-                            className="p-1 rounded-lg placeholder:text-center"
+                            className="p-1 rounded-lg placeholder:text-center text-black"
                         />
                     </div>
                 </div>
