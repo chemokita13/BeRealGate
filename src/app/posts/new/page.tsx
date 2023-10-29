@@ -1,14 +1,12 @@
 "use client";
 import axiosInstance from "@/constants/axiosInstance";
 import { PostData } from "@/types/types";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Cookie from "cookie-universal";
 import { toast } from "react-toastify";
 import Link from "next/link";
 
 function NewPost() {
-    //?const router = useRouter();
     useEffect(() => {
         toast.warn("This page is in alpha version and may not work properly");
     }, []);
@@ -79,7 +77,6 @@ function NewPost() {
                 }
             );
             //* Third request, post options
-            //?const postOptions: PostData = postData
             const postDataToSend: { tokenData: string; postData: PostData } = {
                 tokenData: postDataToken,
                 postData: postData,
