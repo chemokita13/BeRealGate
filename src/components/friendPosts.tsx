@@ -41,6 +41,7 @@ function FriendPosts({
                             totalPosts={FriendPost.posts.length}
                             realMojis={post.realMojis}
                             userId={FriendPost.user.id}
+                            all={false}
                         />
                     );
                 })}
