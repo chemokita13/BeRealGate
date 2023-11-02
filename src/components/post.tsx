@@ -13,6 +13,7 @@ function PostElement({
     totalPosts,
     realMojis,
     userId,
+    all,
 }: {
     post: Post | Post_FoF;
     username: string;
@@ -21,6 +22,7 @@ function PostElement({
     authorName: string;
     totalPosts: number;
     realMojis: RealMojisEntity[];
+    all: boolean;
 }) {
     const [postInstance, setPostInstance] = useState<Post | Post_FoF>(post); // post state for updating it
     const [focusFirst, setFocusFirst] = useState<boolean>(true); // focusFirst state for focusing first img
@@ -75,7 +77,7 @@ function PostElement({
                     username={username}
                 />
             )}
-            <AddReactions postId={postInstance.id} userId={userId} />
+            <AddReactions postId={postInstance.id} userId={userId} all={all} />
             {/** Do not try to understand that, hahahah */}
             {totalPosts > 1 && (
                 <a

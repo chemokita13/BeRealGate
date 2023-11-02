@@ -4,7 +4,15 @@ import Cookie from "cookie-universal";
 import { ApiResponse, realmojiOfUser } from "@/types/types";
 import { toast } from "react-toastify";
 
-function AddReactions({ userId, postId }: { userId: string; postId: string }) {
+function AddReactions({
+    userId,
+    postId,
+    all,
+}: {
+    userId: string;
+    postId: string;
+    all: boolean;
+}) {
     const cookie = Cookie();
     const token = localStorage.getItem("token") || cookie.get("token");
     const [toggled, setToggled] = useState(false);
@@ -34,13 +42,34 @@ function AddReactions({ userId, postId }: { userId: string; postId: string }) {
         setAvalibleReactions(realmojis);
     };
     const handleReaction = async (emoji: string): Promise<void> => {
-        const textMoji: string = MojiToText[emoji];
-        if (!textMoji) {
-            toast.error("Something went wrong while submitting reaction");
+        if (!all) {
+            const textMoji: string = MojiToText[emoji];
+            if (!textMoji) {
+                toast.error("Something went wrong while submitting reaction");
+                return;
+            }
+            const response = await axiosInstance.put(
+                `realmojis/${userId}/${postId}`,
+                {
+                    mojiType: textMoji,
+                },
+                {
+                    headers: {
+                        token: token,
+                    },
+                }
+            );
             return;
         }
-        const response = await axiosInstance.put(
-            `realmojis/${userId}/${postId}`,
+        const textMoji: string = MojiToText[emoji];
+        if (!textMoji) {
+            toast.error(
+                "Something went wrong while submitting reactions to all posts"
+            );
+            return;
+        }
+        const response = await axiosInstance.post(
+            "realmojis",
             {
                 mojiType: textMoji,
             },
@@ -50,42 +79,52 @@ function AddReactions({ userId, postId }: { userId: string; postId: string }) {
                 },
             }
         );
+        return;
     };
     useEffect(() => {
         fecthApi();
     }, []);
 
     return (
-        <div className="w-full flex flex-row justify-center">
-            {avalibleReactions &&
-                avalibleReactions.map((realMoji) => {
-                    return (
-                        <div
-                            key={realMoji.id}
-                            className="flex flex- items-center m-2"
-                            onClick={() => {
-                                toast.promise(handleReaction(realMoji.emoji), {
-                                    pending: "Submiting reaction, please, wait",
-                                    success: "Reaction submited",
-                                    error: "Error submiting reaction, try again",
-                                });
-                            }}
-                        >
-                            <div className="relative w-[50px] aspect-square">
-                                <img
-                                    src={realMoji.media.url}
-                                    width={50}
-                                    height={50}
-                                    className="rounded-full"
-                                    alt="realMoji"
-                                />
-                                <span className="absolute bottom-0 right-[-10px]">
-                                    {realMoji.emoji}
-                                </span>
+        <div className="w-5/6 border-white border rounded-lg">
+            <span className="font-semibold">
+                {all ? "React to all posts" : "React to post"}
+            </span>
+            <div className=" flex flex-row justify-center">
+                {avalibleReactions &&
+                    avalibleReactions.map((realMoji) => {
+                        return (
+                            <div
+                                key={realMoji.id}
+                                className="flex flex- items-center m-2"
+                                onClick={() => {
+                                    toast.promise(
+                                        handleReaction(realMoji.emoji),
+                                        {
+                                            pending:
+                                                "Submiting reaction, please, wait",
+                                            success: "Reaction submited",
+                                            error: "Error submiting reaction, try again",
+                                        }
+                                    );
+                                }}
+                            >
+                                <div className="relative w-[50px] aspect-square">
+                                    <img
+                                        src={realMoji.media.url}
+                                        width={50}
+                                        height={50}
+                                        className="rounded-full"
+                                        alt="realMoji"
+                                    />
+                                    <span className="absolute bottom-0 right-[-10px]">
+                                        {realMoji.emoji}
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                    );
-                })}
+                        );
+                    })}
+            </div>
         </div>
     );
 }

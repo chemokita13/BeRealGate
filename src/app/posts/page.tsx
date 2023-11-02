@@ -132,6 +132,7 @@ function PostFeed() {
                                     totalPosts={userPost.posts.length}
                                     realMojis={post.realMojis}
                                     userId={userPost.user.id}
+                                    all={true}
                                 />
                             );
                         })}

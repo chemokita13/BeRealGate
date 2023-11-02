@@ -58,6 +58,8 @@ function FriendOfFriendPosts({
                     authorName={FriendOfFriend.user.username}
                     totalPosts={1}
                     realMojis={FriendOfFriend.realmojis.sample}
+                    all={false}
+                    userId={FriendOfFriend.user.id}
                 />
             </div>
         </div>
