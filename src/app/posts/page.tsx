@@ -145,12 +145,14 @@ function PostFeed() {
                     You don&apos;t have any posts yet
                 </h1>
             )}
-            <Link
-                className="py-3 m-3 text-xl text-center underline transition-all duration-150 border border-white rounded-lg sm:w-1/3 hover:underline hover:scale-110 hover:text-2xl"
-                href={"/posts/friends-of-friends"}
-            >
-                See Friends-of-friends posts
-            </Link>
+            {userPost && (
+                <Link
+                    className="py-3 m-3 text-xl text-center underline transition-all duration-150 border border-white rounded-lg sm:w-1/3 hover:underline hover:scale-110 hover:text-2xl"
+                    href={"/posts/friends-of-friends"}
+                >
+                    See Friends-of-friends posts
+                </Link>
+            )}
             <div className="h-full mt-3 sm:flex sm:flex-row sm:flex-wrap sm:justify-center">
                 {posts.map((Fpost: FriendsPost) => {
                     return (
