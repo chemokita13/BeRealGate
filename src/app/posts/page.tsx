@@ -131,6 +131,7 @@ function PostFeed() {
                                     authorName={userPost.user.username}
                                     totalPosts={userPost.posts.length}
                                     realMojis={post.realMojis}
+                                    userId={userPost.user.id}
                                 />
                             );
                         })}
