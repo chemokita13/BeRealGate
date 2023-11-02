@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import CommentsBox from "./commentsBox";
 import RealMoji from "./realMoji";
 import Music from "./music";
+import AddReactions from "./addReactions";
 
 function PostElement({
     post,
@@ -11,9 +12,11 @@ function PostElement({
     authorName,
     totalPosts,
     realMojis,
+    userId,
 }: {
     post: Post | Post_FoF;
     username: string;
+    userId: string;
     order: number;
     authorName: string;
     totalPosts: number;
@@ -75,6 +78,7 @@ function PostElement({
                     username={username}
                 />
             )}
+            <AddReactions postId={postInstance.id} userId={userId} />
             {/** Do not try to understand that, hahahah */}
             {totalPosts > 1 && (
                 <a
