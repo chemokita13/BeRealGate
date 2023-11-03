@@ -1,3 +1,4 @@
+"use client";
 import axiosInstance from "@/constants/axiosInstance";
 import React, { useEffect, useState } from "react";
 import Cookie from "cookie-universal";
@@ -14,11 +15,11 @@ function AddReactions({
     all: boolean;
 }) {
     const cookie = Cookie();
-    const token = localStorage?.getItem("token") || cookie.get("token");
     const [toggled, setToggled] = useState(false);
     const [avalibleReactions, setAvalibleReactions] = useState<
         realmojiOfUser[]
     >([]);
+    const [token, setToken] = useState<string>("");
     const MojiToText: { [key: string]: string } = {
         "😍": "heartEyes",
         "👍": "up",
@@ -83,6 +84,9 @@ function AddReactions({
     };
     useEffect(() => {
         fecthApi();
+        const tokenToSave =
+            cookie.get("token") || localStorage?.getItem("token");
+        setToken(tokenToSave);
     }, []);
 
     return (
