@@ -83,10 +83,11 @@ function AddReactions({
         return;
     };
     useEffect(() => {
-        fecthApi();
         const tokenToSave =
-            cookie.get("token") || localStorage?.getItem("token");
+            cookie.get("token") || localStorage.getItem("token");
         setToken(tokenToSave);
+        console.log(token);
+        fecthApi();
     }, []);
 
     return (
