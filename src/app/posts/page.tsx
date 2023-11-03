@@ -16,6 +16,7 @@ import Cookie from "cookie-universal";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import AddReactions from "@/components/addReactions";
 
 function PostFeed() {
     const cookies = Cookie(); // Cookies instance
@@ -143,9 +144,16 @@ function PostFeed() {
                     </ul>
                 </div>
             ) : (
-                <h1 className="text-center cursor-default">
-                    You don&apos;t have any posts yet
-                </h1>
+                <>
+                    <h1 className="text-center cursor-default">
+                        You don&apos;t have any posts yet
+                    </h1>
+                    <AddReactions
+                        all={true}
+                        userId={userInfo?.id || ""}
+                        postId={""}
+                    />
+                </>
             )}
             {userPost && (
                 <Link
