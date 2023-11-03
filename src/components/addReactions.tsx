@@ -19,7 +19,6 @@ function AddReactions({
     const [avalibleReactions, setAvalibleReactions] = useState<
         realmojiOfUser[]
     >([]);
-    const [token, setToken] = useState<string>("");
     const MojiToText: { [key: string]: string } = {
         "😍": "heartEyes",
         "👍": "up",
@@ -27,6 +26,7 @@ function AddReactions({
         "⚡": "instant",
     };
     const fecthApi = async (): Promise<void> => {
+        const token = cookie.get("token") || localStorage.getItem("token");
         const { status, data }: ApiResponse = await axiosInstance.get(
             "friends/me",
             {
@@ -43,6 +43,7 @@ function AddReactions({
         setAvalibleReactions(realmojis);
     };
     const handleReaction = async (emoji: string): Promise<void> => {
+        const token = cookie.get("token") || localStorage.getItem("token");
         if (!all) {
             const textMoji: string = MojiToText[emoji];
             if (!textMoji) {
@@ -83,10 +84,6 @@ function AddReactions({
         return;
     };
     useEffect(() => {
-        const tokenToSave =
-            cookie.get("token") || localStorage.getItem("token");
-        setToken(tokenToSave);
-        console.log(token);
         fecthApi();
     }, []);
 
