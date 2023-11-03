@@ -152,6 +152,17 @@ export type PostData = {
     location?: [number, number];
 };
 
+export type realmojiOfUser = {
+    id: string;
+    userId: string;
+    emoji: string;
+    media: {
+        url: string;
+        width: number;
+        height: number;
+    };
+};
+
 export type UserInfo = {
     id: string;
     username: string;
@@ -162,16 +173,7 @@ export type UserInfo = {
         width: number;
         height: number;
     };
-    realmojis: Array<{
-        id: string;
-        userId: string;
-        emoji: string;
-        media: {
-            url: string;
-            width: number;
-            height: number;
-        };
-    }>;
+    realmojis: realmojiOfUser[];
     devices: Array<{
         clientVersion: string;
         device: string;

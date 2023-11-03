@@ -16,6 +16,7 @@ import Cookie from "cookie-universal";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import AddReactions from "@/components/addReactions";
 
 function PostFeed() {
     const cookies = Cookie(); // Cookies instance
@@ -131,6 +132,8 @@ function PostFeed() {
                                     authorName={userPost.user.username}
                                     totalPosts={userPost.posts.length}
                                     realMojis={post.realMojis}
+                                    userId={userPost.user.id}
+                                    all={true}
                                 />
                             );
                         })}
@@ -141,16 +144,25 @@ function PostFeed() {
                     </ul>
                 </div>
             ) : (
-                <h1 className="text-center cursor-default">
-                    You don&apos;t have any posts yet
-                </h1>
+                <>
+                    <h1 className="text-center cursor-default">
+                        You don&apos;t have any posts yet
+                    </h1>
+                    <AddReactions
+                        all={true}
+                        userId={userInfo?.id || ""}
+                        postId={""}
+                    />
+                </>
             )}
-            <Link
-                className="py-3 m-3 text-xl text-center underline transition-all duration-150 border border-white rounded-lg sm:w-1/3 hover:underline hover:scale-110 hover:text-2xl"
-                href={"/posts/friends-of-friends"}
-            >
-                See Friends-of-friends posts
-            </Link>
+            {userPost && (
+                <Link
+                    className="py-3 m-3 text-xl text-center underline transition-all duration-150 border border-white rounded-lg sm:w-1/3 hover:underline hover:scale-110 hover:text-2xl"
+                    href={"/posts/friends-of-friends"}
+                >
+                    See Friends-of-friends posts
+                </Link>
+            )}
             <div className="h-full mt-3 sm:flex sm:flex-row sm:flex-wrap sm:justify-center">
                 {posts.map((Fpost: FriendsPost) => {
                     return (

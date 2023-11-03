@@ -1,8 +1,9 @@
 import { Post, Post_FoF, RealMojisEntity, sc } from "@/types/types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CommentsBox from "./commentsBox";
 import RealMoji from "./realMoji";
 import Music from "./music";
+import AddReactions from "./addReactions";
 
 function PostElement({
     post,
@@ -11,19 +12,20 @@ function PostElement({
     authorName,
     totalPosts,
     realMojis,
+    userId,
+    all,
 }: {
     post: Post | Post_FoF;
     username: string;
+    userId: string;
     order: number;
     authorName: string;
     totalPosts: number;
     realMojis: RealMojisEntity[];
+    all: boolean;
 }) {
     const [postInstance, setPostInstance] = useState<Post | Post_FoF>(post); // post state for updating it
     const [focusFirst, setFocusFirst] = useState<boolean>(true); // focusFirst state for focusing first img
-    useEffect(() => {
-        console.log(postInstance.type);
-    });
 
     return (
         <div
@@ -75,6 +77,7 @@ function PostElement({
                     username={username}
                 />
             )}
+            <AddReactions postId={postInstance.id} userId={userId} all={all} />
             {/** Do not try to understand that, hahahah */}
             {totalPosts > 1 && (
                 <a
