@@ -14,7 +14,7 @@ function AddReactions({
     all: boolean;
 }) {
     const cookie = Cookie();
-    const token = localStorage.getItem("token") || cookie.get("token");
+    const token = localStorage?.getItem("token") || cookie.get("token");
     const [toggled, setToggled] = useState(false);
     const [avalibleReactions, setAvalibleReactions] = useState<
         realmojiOfUser[]
