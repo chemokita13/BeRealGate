@@ -86,8 +86,8 @@ function AddReactions({
     }, []);
 
     return (
-        <div className="w-5/6 border-white border rounded-lg">
-            <span className="font-semibold">
+        <div className="w-5/6 border-white border rounded-lg flex flex-col items-center">
+            <span className="font-semibold ">
                 {all ? "React to all posts" : "React to post"}
             </span>
             <div className=" flex flex-row justify-center">
@@ -103,7 +103,8 @@ function AddReactions({
                                         {
                                             pending:
                                                 "Submiting reaction, please, wait",
-                                            success: "Reaction submited",
+                                            success:
+                                                "Reaction submited, reload page to see it",
                                             error: "Error submiting reaction, try again",
                                         }
                                     );
