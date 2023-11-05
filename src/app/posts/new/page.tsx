@@ -55,6 +55,7 @@ function NewPost() {
             const formWithPhoto1 = new FormData();
             img1 && formWithPhoto1.append("img", new Blob([img1]));
             formWithPhoto1.append("tokenData", firstPhotoToken);
+            formWithPhoto1.append("resize", "true");
             const responsePhoto1 = await axiosInstance.put(
                 "/post/upload/photo",
                 formWithPhoto1,
@@ -67,6 +68,7 @@ function NewPost() {
             const formWithPhoto2 = new FormData();
             img2 && formWithPhoto2.append("img", new Blob([img2]));
             formWithPhoto2.append("tokenData", secondPhotoToken);
+            formWithPhoto2.append("resize", "true");
             const responsePhoto2 = await axiosInstance.put(
                 "/post/upload/photo",
                 formWithPhoto2,
