@@ -2,14 +2,14 @@ export default function About() {
     return (
         <div
             id="main-index"
-            className="flex flex-col items-center p-5 text-left text-white sm:items-start"
+            className="flex flex-col items-center p-5 text-left text-white sm:items-start overflow-scroll"
         >
-            <div className="flex flex-col items-center gap-3 sm:ml-5 w-min">
+            <div className="flex flex-col items-center gap-3 sm:ml-5 sm:w-min">
                 <h1 className="p-1 text-3xl font-extrabold cursor-pointer sm:text-6xl w-max">
-                    About BeReal Gate.
+                    About BeRealgate.
                 </h1>
                 <p className="w-3/4 text-xl font-semibold text-justify">
-                    BeReal Gate is a web application that allows you to use
+                    BeRealgate is a web application that allows you to use
                     BeReal web without any requirement. You can view your
                     friends posts without upload your own post. You can also can
                     comment in each post, and see the comments of other users.
