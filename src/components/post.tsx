@@ -63,6 +63,16 @@ function PostElement({
                     //? height={2000 / 4}
                 />
             </div>
+            {postInstance.type === "Post" &&
+                postInstance.postType === "bts" && (
+                    <video
+                        className="block rounded-md "
+                        // height={postInstance.btsMedia?.width}
+                        // width={postInstance.btsMedia?.height}
+                        src={postInstance.btsMedia?.url}
+                        controls
+                    />
+                )}
             <p>{postInstance.caption}</p>
             {postInstance.music && <Music music={postInstance.music} />}
             <div className="flex flex-row flex-wrap justify-center">
