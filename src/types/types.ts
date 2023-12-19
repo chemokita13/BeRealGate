@@ -47,6 +47,15 @@ export interface ProfilePictureOrMediaOrPrimaryOrSecondary1 {
     url: string;
     width: number;
     height: number;
+    mediaType?: MediaType;
+}
+export enum MediaType {
+    Image = "image",
+    Video = "video",
+}
+export enum PostType {
+    Bts = "bts",
+    Default = "default",
 }
 export interface Post {
     type: "Post";
@@ -66,6 +75,13 @@ export interface Post {
     updatedAt: string;
     music?: Music | null;
     screenshots?: sc[] | null;
+    btsMedia?: {
+        url: string;
+        width: number;
+        height: number;
+        mediaType?: ProfilePictureOrMediaOrPrimaryOrSecondary;
+    };
+    postType: PostType;
 }
 
 export interface Post_FoF {
