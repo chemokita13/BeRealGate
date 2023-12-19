@@ -26,6 +26,7 @@ function PostElement({
 }) {
     const [postInstance, setPostInstance] = useState<Post | Post_FoF>(post); // post state for updating it
     const [focusFirst, setFocusFirst] = useState<boolean>(true); // focusFirst state for focusing first img
+    const [showBTS, setshowBTS] = useState<boolean>(false); // showBTS state for showing BTS video
 
     return (
         <div
@@ -64,15 +65,29 @@ function PostElement({
                 />
             </div>
             {postInstance.type === "Post" &&
-                postInstance.postType === "bts" && (
-                    <video
-                        className="block rounded-md "
-                        // height={postInstance.btsMedia?.width}
-                        // width={postInstance.btsMedia?.height}
-                        src={postInstance.btsMedia?.url}
-                        controls
-                    />
-                )}
+                postInstance.postType === "bts" &&
+                (showBTS ? (
+                    <div className="">
+                        <video
+                            className="block rounded-md "
+                            src={postInstance.btsMedia?.url}
+                            controls
+                        />
+                        <div
+                            onClick={() => setshowBTS((BTS) => !BTS)}
+                            className="cursor-pointer underline font-bold"
+                        >
+                            Close BTS
+                        </div>
+                    </div>
+                ) : (
+                    <div
+                        onClick={() => setshowBTS((BTS) => !BTS)}
+                        className="cursor-pointer underline font-bold"
+                    >
+                        Show BTS
+                    </div>
+                ))}
             <p>{postInstance.caption}</p>
             {postInstance.music && <Music music={postInstance.music} />}
             <div className="flex flex-row flex-wrap justify-center">
