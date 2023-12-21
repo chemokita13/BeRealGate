@@ -130,6 +130,14 @@ function NewPost() {
         }
         setPostData({ ...postData, [name]: value });
     };
+    const setLateChange = (e: React.FormEvent<HTMLInputElement>) => {
+        const { name, value } = e.currentTarget;
+        setPostData({ ...postData, [name]: value === "true" ? true : false });
+    };
+    const handleDateChange = (e: React.FormEvent<HTMLInputElement>) => {
+        const { name, value } = e.currentTarget;
+        setPostData({ ...postData, [name]: new Date(value).toISOString() });
+    };
     return (
         <div className="flex flex-col items-center h-screen bg-black">
             <form
@@ -168,6 +176,38 @@ function NewPost() {
                     onChange={(e) => handleInputChange(e)}
                     className="p-1 mt-3 mb-1 rounded-lg placeholder:text-center"
                 />
+                <input
+                    type="date"
+                    name="date"
+                    id="title"
+                    placeholder="Date"
+                    onChange={(e) => handleDateChange(e)}
+                    className="p-1 mt-3 mb-1 rounded-lg placeholder:text-center"
+                />
+                <div className="flex flex-row justify-center gap-5 ">
+                    <div className="flex flex-row gap-1 ">
+                        <input
+                            onChange={(e) => setLateChange(e)}
+                            type="radio"
+                            name="late"
+                            id="late"
+                            value="true"
+                            className="p-1 rounded-lg placeholder:text-center"
+                        />
+                        <span className="text-white">Late</span>
+                    </div>
+                    <div className="flex flex-row gap-1 ">
+                        <input
+                            type="radio"
+                            name="late"
+                            id="late"
+                            value="false"
+                            onChange={(e) => setLateChange(e)}
+                            className="p-1 rounded-lg placeholder:text-center"
+                        />
+                        <span className="text-white">Not late</span>
+                    </div>
+                </div>
                 <div className="flex flex-col p-3 my-3 text-center text-white border border-white rounded-xl ">
                     <label className="my-1">Post coordinates</label>
                     <div className="flex flex-row justify-center gap-5 ">
