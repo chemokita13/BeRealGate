@@ -11,7 +11,6 @@ function Login() {
     const cookies = Cookie();
     // Cookies instance
     const router = useRouter(); // Next router instance
-
     const [sentCode, setSentCode] = useState<boolean>(false); // If otpCode was sent to phone is true, else false
     const [phone, setPhone] = useState<string>(""); // Phone number state
     const [otpSession, setOtpSession] = useState<string>(""); // Otp token returned on postPhoneSubmit
@@ -34,9 +33,34 @@ function Login() {
                         "Access-Control-Allow-Origin": "*", // Required for CORS support to work
                         cors: "*",
                     },
+                    validateStatus: function (status: number) {
+                        return status < 500; // Reject only if the status code is greater than or equal to 500
+                    },
                 });
             if (status !== 201) {
-                toast.error("Error sending code");
+                /// Vonage OTP method start
+                const newResponse = await axios.post("login/send-code/vonage", {
+                    phone: phone,
+                    Headers: {
+                        "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+                        cors: "*",
+                    },
+                    validateStatus: function (status: number) {
+                        return status < 500; // Reject only if the status code is greater than or equal to 500
+                    },
+                });
+                if (newResponse.status !== 201) {
+                    toast.error("Error sending code");
+                    console.log(newResponse.data);
+                    return;
+                }
+                setOtpSession(newResponse.data.data.otpSession);
+                cookies.set("otpSession", newResponse.data.data.otpSession, {
+                    path: "/",
+                }); // Save it in cookies if user reload page
+                setSentCode(true);
+                toast.success("Code sent");
+                /// Vonage OTP method end
                 return;
             }
             setOtpSession(data.data.otpSession);
@@ -63,15 +87,53 @@ function Login() {
                 otpSession || cookies.get("otpSession");
             if (!otpSessionToPost) {
                 toast.warn("Error getting otp sesion code");
+
                 return;
             }
-            const { status, data } = await axios.post("login/verify", {
-                otpSession: otpSessionToPost,
-                code: otp,
-            });
+            const { status, data } = await axios.post(
+                "login/verify",
+                {
+                    otpSession: otpSessionToPost,
+                    code: otp,
+                },
+                {
+                    validateStatus(status: number) {
+                        return status < 500; // Reject only if the status code is greater than or equal to 500
+                    },
+                }
+            );
 
             if (status !== 201) {
-                toast.error("Error verifying otp code");
+                const newResponse = await axios.post(
+                    "/login/verify/vonage",
+                    {
+                        otpSession: otpSessionToPost,
+                        code: otp,
+                    },
+                    {
+                        validateStatus(status: number) {
+                            return status < 500; // Reject only if the status code is greater than or equal to 500
+                        },
+                    }
+                );
+                if (newResponse.status !== 201) {
+                    toast.error("Error verifying otp code");
+                    console.log(newResponse.data);
+                    return;
+                }
+
+                // delete otpSession from cookies
+                cookies.remove("otpSession", { path: "/" });
+                // save token in cookies
+                cookies.set("token", newResponse.data.data.token, {
+                    path: "/",
+                });
+                // save token in localStorage
+                localStorage.setItem("token", newResponse.data.data.token);
+                // Notify user
+                toast.success("Logged in");
+                // redirect to posts page
+                router.push("/posts");
                 return;
             }
 
