@@ -1,4 +1,5 @@
 # BeReal Gate
+## ⚠️NOT WORKING NOW, UNDER MANTENIANCE!!!  BEREAL CHANGED API ENDPOINTS⚠️
 
 -   A new way (not official) to BeReal: [**BeReal Gate**](https://berealgate.vercel.app)
 -   Free and open source! (Only I want a ⭐ in my repo)
