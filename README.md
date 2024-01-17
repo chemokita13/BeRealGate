@@ -1,9 +1,13 @@
 # BeReal Gate
-## ⚠️NOT WORKING NOW, UNDER MANTENIANCE!!!  BEREAL CHANGED API ENDPOINTS⚠️
 
+## What is berealgate?
 -   A new way (not official) to BeReal: [**BeReal Gate**](https://berealgate.vercel.app)
 -   Free and open source! (Only I want a ⭐ in my repo)
 -   https://berealgate.vercel.app
+
+## Berealgate status warnings
+- Post comment not working
+- Post upload routes not working as expected (throws random errors xdn't)
 
 ## Features
 - **Don't need to post a BeReal** to see your friends BeReal
