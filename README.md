@@ -61,6 +61,11 @@ npm run build && npm start
 
 -   You can contribute that repo reporting issues or submiting pull requests or also publiciting
 
+### Donations
+
+-   You can donate me in [PayPal](https://www.paypal.com/paypalme/chemokita) Email: *chemokita13@gmail.com*
+-   Also you can donate with ETH in [my github profile](https://github.com/chemokita13#donate)
+
 ---
 
 ---
