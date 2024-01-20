@@ -8,7 +8,7 @@ export default function Home() {
             className="flex flex-col justify-center text-left text-white align-middle"
         >
             <h1 className="p-1 text-5xl font-extrabold cursor-pointer ml-7 sm:ml-16 ">
-                A new way to BeReal.
+                View bereals without posting anything.
             </h1>
             <h2 className="text-2xl font-semibold cursor-pointer ml-7 sm:ml-20">
                 Say &quot;Hello!&quot; to <u>BeReal Gate</u>.
