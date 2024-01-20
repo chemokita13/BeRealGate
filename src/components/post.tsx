@@ -100,6 +100,7 @@ function PostElement({
                     postInstance={postInstance}
                     setPostInstance={setPostInstance}
                     username={username}
+                    userPostId={userId}
                 />
             )}
             <AddReactions postId={postInstance.id} userId={userId} all={all} />

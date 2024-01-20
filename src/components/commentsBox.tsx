@@ -8,10 +8,12 @@ function CommentsBox({
     setPostInstance,
     postInstance,
     username,
+    userPostId,
 }: {
     setPostInstance: React.Dispatch<React.SetStateAction<Post | Post_FoF>>;
     postInstance: Post;
     username: string;
+    userPostId: string;
 }) {
     const cookies = Cookie();
     const newCommentInputRef = React.createRef<HTMLInputElement>(); // New comment input ref
@@ -51,6 +53,7 @@ function CommentsBox({
                     "post/comment",
                     {
                         comment: comment,
+                        userId: userPostId,
                         postId: postInstance.id,
                     },
                     {
