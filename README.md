@@ -1,12 +1,12 @@
 # BeReal Gate
 
-## What is berealgate?
+## What is BeReal Gate?
 
 -   A new way (not official) to BeReal: [**BeReal Gate**](https://berealgate.vercel.app)
 -   Free and open source! (Only I want a ⭐ in my repo)
 -   https://berealgate.vercel.app
 
-## Berealgate status warnings
+## BeReal Gate status warnings
 
 -   Loging with a uk number or others may cause an error
 -   Delete a comment may not be working
