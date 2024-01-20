@@ -9,13 +9,13 @@ import Ganal from "@/components/ganal";
 import React from "react";
 export const metadata: Metadata = {
     title: "BeReal Gate",
-    description: "A new way to BeReal",
+    description: "View bereals without posting anything.",
     authors: {
         name: "Jose Maria Pahino",
         url: "https://github.com/chemokita13",
     },
     keywords:
-        "BeReal, BeFake, BeReal API, BeReal API web, BeReal API web, bereal, BeRealGate",
+        "BeReal, bereal, BeFake, BeReal API, BeReal API web, BeReal API web, bereal, BeRealGate, BeReal Gate, berealgate, bereal gate, Bereal gate, bereal trick",
 };
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (
