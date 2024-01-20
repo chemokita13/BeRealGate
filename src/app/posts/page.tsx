@@ -125,7 +125,7 @@ function PostFeed() {
                         {userPost.posts.map((post: Post, index: number) => {
                             return (
                                 <PostElement
-                                    post={post}
+                                    post={{ ...post, type: "Post" }}
                                     key={post.id}
                                     username={userPost.user.username}
                                     order={index}
