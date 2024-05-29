@@ -83,7 +83,7 @@ function Login() {
         }
         try {
             // Check if otpSession is in state or cookies
-            const otpSessionToPost: string =
+            const otpSessionToPost: any =
                 otpSession || cookies.get("otpSession");
             if (!otpSessionToPost) {
                 toast.warn("Error getting otp sesion code");
@@ -93,15 +93,20 @@ function Login() {
             const { status, data } = await axios.post(
                 "login/verify",
                 {
-                    otpSession: otpSessionToPost,
+                    otpSession: otpSessionToPost.sessionInfo,
                     code: otp,
                 },
                 {
                     validateStatus(status: number) {
-                        return status < 500; // Reject only if the status code is greater than or equal to 500
+                        return status <= 500; // Reject only if the status code is greater than or equal to 500
                     },
                 }
             );
+
+            console.warn("status", status, "data", data, {
+                otpSession: otpSessionToPost.sessionInfo,
+                code: otp,
+            });
 
             if (status !== 201) {
                 const newResponse = await axios.post(
