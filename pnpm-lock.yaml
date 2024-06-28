@@ -29,6 +29,9 @@ dependencies:
   next:
     specifier: ^13.4.6
     version: 13.4.6(react-dom@18.2.0)(react@18.2.0)
+  optional:
+    specifier: ^0.1.4
+    version: 0.1.4
   postcss:
     specifier: 8.4.23
     version: 8.4.23
@@ -2281,6 +2284,10 @@ packages:
       define-lazy-prop: 3.0.0
       is-inside-container: 1.0.0
       is-wsl: 2.2.0
+    dev: false
+
+  /optional@0.1.4:
+    resolution: {integrity: sha512-gtvrrCfkE08wKcgXaVwQVgwEQ8vel2dc5DDBn9RLQZ3YtmtkBss6A2HY6BnJH4N/4Ku97Ri/SF8sNWE2225WJw==}
     dev: false
 
   /optionator@0.9.1:
