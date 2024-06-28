@@ -81,7 +81,7 @@ function NewPost() {
             if (firstResponse.data.done) {
                 toast.success("Post created");
             } else {
-                toast.error("Error creating post");
+                toast.error(firstResponse.data.message);
             }
         } catch (error) {
             console.log(error);
