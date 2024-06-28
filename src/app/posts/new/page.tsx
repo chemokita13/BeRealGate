@@ -5,122 +5,105 @@ import { useEffect, useState } from "react";
 import Cookie from "cookie-universal";
 import { toast } from "react-toastify";
 import Link from "next/link";
+import axios from "axios";
 
 function NewPost() {
-    useEffect(() => {
-        toast.warn("This page is in alpha version and may not work properly");
-    }, []);
+    function getBase64(file: any) {
+        return new Promise((resolve) => {
+            let fileInfo;
+            let baseURL: any = "";
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+
+            reader.onload = () => {
+                baseURL = reader.result;
+                resolve(baseURL);
+            };
+        });
+    }
+
+    // useEffect(() => {
+    //     toast.warn("This page is in alpha version and may not work properly");
+    // }, []);
     const cookies = Cookie();
 
     const [img1, setImg1] = useState<Uint8Array>();
     const [img2, setImg2] = useState<Uint8Array>();
     const [postData, setPostData] = useState<PostData>({
         visibility: "friends",
+        late: true,
     });
     const [location, setLocation] = useState<{ lon?: number; lat?: number }>(
         {}
     );
     const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        let dataWillSend = {};
         // If location is set, add it to postData
-        location.lat &&
-            location.lon &&
-            setPostData({
+        // location.lat &&
+        //     location.lon &&
+        //     setPostData({
+        //         ...postData,
+        //         location: [location.lat, location.lon],
+        //     });
+
+        if (location.lat && location.lon) {
+            dataWillSend = {
                 ...postData,
                 location: [location.lat, location.lon],
-            });
-        //* Create the form that will be sent
-        const FormToSend = new FormData();
-        // Add the data to the form, (img1, img2 and settings: postData)
-        FormToSend.append("visibility", postData.visibility || "friends");
-        postData.caption && FormToSend.append("caption", postData.caption);
-        postData.location &&
-            FormToSend.append(
-                "location",
-                [location.lat, location.lon].toString()
-            );
+            };
+        } else {
+            dataWillSend = { ...postData };
+        }
+
         try {
-            const token: string =
-                cookies.get("token") || localStorage.getItem("token");
-            //* First request
-            const response = await axiosInstance.get("/post/upload/getData", {
+            const { data } = await axiosInstance.get("/login/get-token", {
                 headers: {
-                    token: token,
+                    token: `${localStorage.getItem("token")}`,
                 },
             });
-            // Get the tokens to send
-            const { postDataToken, secondPhotoToken, firstPhotoToken } =
-                response.data.data;
-            //* Second request (post photos)
-            const formWithPhoto1 = new FormData();
-            img1 && formWithPhoto1.append("img", new Blob([img1]));
-            formWithPhoto1.append("tokenData", firstPhotoToken);
-            formWithPhoto1.append("resize", "true");
-            const responsePhoto1 = await axiosInstance.put(
-                "/post/upload/photo",
-                formWithPhoto1,
-                {
-                    headers: {
-                        token: token,
-                    },
-                }
+            const token: string = data.data.data.access.token;
+            const headers: { [key: string]: string } = data.data.headers;
+            console.log(
+                "🚀 ~ file: new.tsx:74 ~ handleFormSubmit ~ headers",
+                dataWillSend
             );
-            const formWithPhoto2 = new FormData();
-            img2 && formWithPhoto2.append("img", new Blob([img2]));
-            formWithPhoto2.append("tokenData", secondPhotoToken);
-            formWithPhoto2.append("resize", "true");
-            const responsePhoto2 = await axiosInstance.put(
-                "/post/upload/photo",
-                formWithPhoto2,
-                {
-                    headers: {
-                        token: token,
-                    },
-                }
+            const firstResponse = await axios.post("/api", {
+                headers: { ...headers, authorization: `Bearer ${token}` },
+                img1: img1,
+                img2: img2,
+                datas: dataWillSend,
+            });
+            console.log(
+                "🚀 ~ file: new.tsx:74 ~ handleFormSubmit ~ firstResponse",
+                firstResponse
             );
-            //* Third request, post options
-            const postDataToSend: { tokenData: string; postData: PostData } = {
-                tokenData: postDataToken,
-                postData: postData,
-            };
-            const responseOptions = await axiosInstance.post(
-                "/post/upload/data",
-                postDataToSend,
-                {
-                    headers: {
-                        token: token,
-                    },
-                }
-            );
-            console.log(responseOptions.statusText, responsePhoto1.statusText);
-            toast.success("Post created successfully");
+            if (firstResponse.data.done) {
+                toast.success("Post created");
+            } else {
+                toast.error("Error creating post");
+            }
         } catch (error) {
             console.log(error);
             toast.error("Error creating post");
         }
     };
-    const handleImg1 = (e: React.FormEvent<HTMLInputElement>) => {
-        const file = e.currentTarget.files;
+    const handleImg1 = (e: any) => {
+        const file = e.target.files[0];
 
-        const reader = new FileReader();
-        if (file) {
-            console.log("🚀 ~ file: new.tsx:28 ~ handleImg ~ file:", file);
-            reader.readAsArrayBuffer(file[0]);
-            reader.onloadend = () => {
-                setImg1(new Uint8Array(reader.result as ArrayBuffer));
-            };
-        }
+        console.log(file);
+
+        getBase64(file).then((result: any) => {
+            console.log(result);
+            setImg1(result);
+        });
     };
-    const handleImg2 = (e: React.FormEvent<HTMLInputElement>) => {
-        const file = e.currentTarget.files;
-        const reader = new FileReader();
-        if (file) {
-            console.log("🚀 ~ file: new.tsx:28 ~ handleImg ~ file:", file);
-            reader.readAsArrayBuffer(file[0]);
-            reader.onloadend = () => {
-                setImg2(new Uint8Array(reader.result as ArrayBuffer));
-            };
-        }
+    const handleImg2 = (e: any) => {
+        const file = e.target.files[0];
+
+        getBase64(file).then((result: any) => {
+            setImg2(result);
+        });
     };
     const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
         const { name, value } = e.currentTarget;
@@ -171,8 +154,9 @@ function NewPost() {
                 <input
                     type="text"
                     name="caption"
+                    disabled={true}
                     id="title"
-                    placeholder="Caption"
+                    placeholder="Caption not working yet"
                     onChange={(e) => handleInputChange(e)}
                     className="p-1 mt-3 mb-1 rounded-lg placeholder:text-center"
                 />
@@ -257,17 +241,6 @@ function NewPost() {
                             <span className="text-white">
                                 Friends of friends
                             </span>
-                        </div>
-                        <div className="flex flex-row gap-1 ">
-                            <input
-                                type="radio"
-                                name="visibility"
-                                id="public"
-                                value="public"
-                                onChange={(e) => handleInputChange(e)}
-                                className="p-1 rounded-lg placeholder:text-center"
-                            />
-                            <span className="text-white">Public</span>
                         </div>
                     </div>
                 </div>
