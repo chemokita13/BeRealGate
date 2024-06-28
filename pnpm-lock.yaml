@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@img/sharp-linux-x64':
+    specifier: ^0.33.4
+    version: 0.33.4
   '@types/node':
     specifier: 20.1.7
     version: 20.1.7
@@ -277,7 +280,6 @@ packages:
     optionalDependencies:
       '@img/sharp-libvips-linux-x64': 1.0.2
     dev: false
-    optional: true
 
   /@img/sharp-linuxmusl-arm64@0.33.4:
     resolution: {integrity: sha512-nhr1yC3BlVrKDTl6cO12gTpXMl4ITBUZieehFvMntlCXFzH2bvKG76tBL2Y/OqhupZt81pR7R+Q5YhJxW0rGgQ==}
