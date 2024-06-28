@@ -3,11 +3,11 @@ import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 import sharp from "sharp";
 
-export const config = {
-    api: {
-        bodyParser: { sizeLimit: '12mb', },
-    }
-};
+// export const config = {
+//     api: {
+//         bodyParser: { sizeLimit: '12mb', },
+//     }
+// };
 
 export async function POST(
     req: NextRequest
