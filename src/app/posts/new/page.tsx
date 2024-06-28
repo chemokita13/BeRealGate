@@ -56,36 +56,31 @@ function NewPost() {
             dataWillSend = { ...postData };
         }
 
-        try {
-            const { data } = await axiosInstance.get("/login/get-token", {
-                headers: {
-                    token: `${localStorage.getItem("token")}`,
-                },
-            });
-            const token: string = data.data.data.access.token;
-            const headers: { [key: string]: string } = data.data.headers;
-            console.log(
-                "🚀 ~ file: new.tsx:74 ~ handleFormSubmit ~ headers",
-                dataWillSend
-            );
-            const firstResponse = await axios.post("/api", {
-                headers: { ...headers, authorization: `Bearer ${token}` },
-                img1: img1,
-                img2: img2,
-                datas: dataWillSend,
-            });
-            console.log(
-                "🚀 ~ file: new.tsx:74 ~ handleFormSubmit ~ firstResponse",
-                firstResponse
-            );
-            if (firstResponse.data.done) {
-                toast.success("Post created");
-            } else {
-                toast.error(firstResponse.data.message);
-            }
-        } catch (error) {
-            console.log(error);
-            toast.error("Error creating post");
+        const { data } = await axiosInstance.get("/login/get-token", {
+            headers: {
+                token: `${localStorage.getItem("token")}`,
+            },
+        });
+        const token: string = data.data.data.access.token;
+        const headers: { [key: string]: string } = data.data.headers;
+        console.log(
+            "🚀 ~ file: new.tsx:74 ~ handleFormSubmit ~ headers",
+            dataWillSend
+        );
+        const firstResponse = await axios.post("/api", {
+            headers: { ...headers, authorization: `Bearer ${token}` },
+            img1: img1,
+            img2: img2,
+            datas: dataWillSend,
+        });
+        console.log(
+            "🚀 ~ file: new.tsx:74 ~ handleFormSubmit ~ firstResponse",
+            firstResponse
+        );
+        if (firstResponse.data.done) {
+            toast.success("Post created");
+        } else {
+            toast.error(firstResponse.data.message);
         }
     };
     const handleImg1 = (e: any) => {
