@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 import Link from "next/link";
 import axios from "axios";
 
+export const runtime = "edge";
+
 function NewPost() {
     function getBase64(file: any) {
         return new Promise((resolve) => {
