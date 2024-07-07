@@ -1,13 +1,11 @@
 "use client";
 import axiosInstance from "@/constants/axiosInstance";
 import { PostData } from "@/types/types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Cookie from "cookie-universal";
 import { toast } from "react-toastify";
 import Link from "next/link";
 import axios from "axios";
-
-export const runtime = "edge";
 
 function NewPost() {
     function getBase64(file: any) {

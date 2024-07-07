@@ -9,9 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@img/sharp-linux-x64": "^0.33.4",
     "@types/node": "20.1.7",
     "@vercel/analytics": "^1.0.1",
+    "Buffer": "^0.0.0",
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
     "cookie-universal": "^2.2.2",
